@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sadhana Tracker</title>
+  <style>
+   *{
+     margin: 0px;
+     padding: 0px;
+     box-sizing:border-box ;
+}
+
+    body {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      background: #f6f8fb;
+      height: 100vh;
+      
+    }
+    #container{
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      padding: 30px;
+      gap: 1rem;
+      border: 2px solid red;
+    }
+    #data{
+      max-width: 100%;
+      flex: 1;
+      border-radius: 12px;
+      border: 2px solid red;
+      padding: 0.5rem;
+
+    }
+    .box {
+      flex: 1;
+      border: 2px solid red;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ddd;
+      display: flex;
+      flex-direction: column;
+    }
+    input, textarea, button {
+      padding: 10px;
+      margin: 8px 0;
+    }
+    button {
+      background: #1f4e79;
+      color: white;
+      border: none;
+      border-radius: 6px;
+    }
+    #records{
+      width: 100%;
+      border: 2px solid red;
+      justify-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 1rem;
+
+    }
+    .entry {
+      background: #eef3f8;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    .field{
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+
+<div class="box">
+  <h2>🌿 Sadhana Tracker</h2>
+  <input type="date" id="date">
+  <label for="location">Location</label>
+  <input type="text" id="location" placeholder="Detecting location..." readonly>
+  <input type="number" id="rounds" placeholder="Chanting rounds">
+  <input type="number" id="reading" placeholder="Reading minutes">
+  <input type="number" id="hearing" placeholder="Hearing minutes">
+  <label for="wakeTime">wakeup Time</label>
+  <input type="time" placeholder="Wake-up time" id="wakeTime">
+  <label for="sleepTime">Sleep Time</label>
+  <input type="time" placeholder="Sleep time" id="sleepTime">
+  <label for="Round_finish_before">Round_finish_before</label>
+  <input type="time" placeholder="Round_finish_before" id="Rounds_finish_before">
+  <input type="input" placeholder="Seva" id="Seva">
+  <button onclick="saveSadhana()">Save</button>
+</div>
+
+<div id="data">
+  <h3 style="text-align: center; padding: 1rem; font-size: 1.5rem;">Previous Records</h3>
+ 
+  <div id="records"></div>
+</div>
+
+</div>
+
+<script>
+
+
+
+  document.getElementById("date").valueAsDate = new Date();
+
+  function getLocation() {
+
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+        );
+
+        const data = await response.json();
+
+        const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.village ||
+            data.address.state_district ||
+            "";
+
+        document.getElementById("location").value = city;
+
+    }, () => {
+        document.getElementById("location").value = "Location not available";
+    });
+
+}
+
+  function saveSadhana() {
+    const entry = {
+      date: document.getElementById("date").value,
+      location: document.getElementById("location").value,
+      rounds: document.getElementById("rounds").value,
+      Rounds_finish_before: document.getElementById("Rounds_finish_before").value,
+      reading: document.getElementById("reading").value,
+      hearing: document.getElementById("hearing").value,
+      wakeTime: document.getElementById("wakeTime").value,
+      sleepTime: document.getElementById("sleepTime").value,
+      Seva: document.getElementById("Seva").value,
+      
+    };
+
+    let data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
+
+    data = data.filter(item => item.date !== entry.date);
+    data.push(entry);
+
+    localStorage.setItem("sadhanaData", JSON.stringify(data));
+
+    showRecords();
+    alert("Sadhana saved successfully!");
+  }
+
+  function showRecords() {
+    const recordsDiv = document.getElementById("records");
+    const data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
+
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    recordsDiv.innerHTML = "";
+
+    data.forEach(item => {
+      recordsDiv.innerHTML += `
+      <div class="entry">
+        <strong>Date : ${item.date}</strong>
+        <div class="field">📍 Location: ${item.location || "Not added"}</div>
+        <div class="field">📿 Rounds: ${item.rounds || 0}</div>
+        <div class="field">⏰ Rounds finish before: ${item.Rounds_finish_before || "Not added"}</div>
+        <div class="field">📖 Reading: ${item.reading || 0} min</div>
+        <div class="field">🎧 Hearing: ${item.hearing || 0} min</div>
+        <div class="field">🌅 Wake-up: ${item.wakeTime || "Not added"}</div>
+        <div class="field">🌙 Sleep Time: ${item.sleepTime || "Not added"}</div>
+        <div class="field">🛕 Seva: ${item.Seva || "Not added"}</div>
+    </div>
+
+      `;
+    });
+  }
+
+  showRecords();
+  // getLocation();
+</script>
+
+</body>
+</html>
