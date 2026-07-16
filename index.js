@@ -527,17 +527,37 @@ function sendRecordToWhatsApp(recordDate) {
 }
 
 function openTab(tabId, btn) {
-  document.querySelectorAll(".tab-page").forEach(tab => {
-    tab.classList.remove("active");
-  });
+  // Sidebar feature pages hide karo
+  document
+    .querySelectorAll(".feature-page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
 
-  document.getElementById(tabId).classList.add("active");
+  // Main tabs hide karo
+  document
+    .querySelectorAll(".tab-page")
+    .forEach(tab => {
+      tab.classList.remove("active");
+    });
 
-  document.querySelectorAll(".tab-btn").forEach(button => {
-    button.classList.remove("active");
-  });
+  document
+    .getElementById(tabId)
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".tab-btn")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
 
   btn.classList.add("active");
+
+  document
+    .querySelectorAll(".sidebar-item")
+    .forEach(item => {
+      item.classList.remove("active");
+    });
 
   if (tabId === "historyTab") {
     showRecords();
@@ -546,6 +566,11 @@ function openTab(tabId, btn) {
   if (tabId === "analyticsTab") {
     showAnalytics();
   }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 function showAnalytics() {
@@ -1089,6 +1114,126 @@ function showTodaysGitaVerse() {
   vedabaseLink.href =
     `https://vedabase.io/en/library/bg/${selectedChapter}/${selectedVerse}/`;
 }
+
+function openSidebar() {
+  const sidebar =
+    document.getElementById("sidebar");
+
+  const overlay =
+    document.getElementById("sidebarOverlay");
+
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+
+  document.body.style.overflow = "hidden";
+}
+
+function closeSidebar() {
+  const sidebar =
+    document.getElementById("sidebar");
+
+  const overlay =
+    document.getElementById("sidebarOverlay");
+
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+
+  document.body.style.overflow = "";
+}
+
+function openFeaturePage(pageId, pageTitle, clickedItem) {
+  // Main pages hide karo
+  document
+    .querySelectorAll(".tab-page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  // Saare feature pages hide karo
+  document
+    .querySelectorAll(".feature-page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  // Selected feature page show karo
+  const selectedPage =
+    document.getElementById(pageId);
+
+  if (selectedPage) {
+    selectedPage.classList.add("active");
+  }
+
+  // Sidebar active item
+  document
+    .querySelectorAll(".sidebar-item")
+    .forEach(item => {
+      item.classList.remove("active");
+    });
+
+  if (clickedItem) {
+    clickedItem.classList.add("active");
+  }
+
+  // Bottom tab active state remove
+  document
+    .querySelectorAll(".tab-btn")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
+
+  closeSidebar();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function returnToDailyPage() {
+  document
+    .querySelectorAll(".feature-page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  document
+    .querySelectorAll(".tab-page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  document
+    .getElementById("dailyTab")
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".tab-btn")
+    .forEach(button => {
+      button.classList.remove("active");
+    });
+
+  const dailyButton =
+    document.querySelector(
+      ".bottom-tabs .tab-btn:first-child"
+    );
+
+  if (dailyButton) {
+    dailyButton.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".sidebar-item")
+    .forEach(item => {
+      item.classList.remove("active");
+    });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 
 showRecords();
 getLocation();

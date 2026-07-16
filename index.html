@@ -21,6 +21,9 @@
 
   <header class="app-header">
     <div class="header-content">
+      <button type="button" class="menu-button" onclick="openSidebar()" aria-label="Open menu">
+        ☰
+      </button>
       <div class="logo">🌿</div>
 
       <div>
@@ -30,6 +33,166 @@
     </div>
   </header>
 
+<!-- Sidebar Overlay -->
+<div
+  id="sidebarOverlay"
+  class="sidebar-overlay"
+  onclick="closeSidebar()"
+></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">🌿</div>
+
+      <div>
+        <h2>Sadhana Tracker</h2>
+        <p>Hare Krishna 🙏</p>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="sidebar-close"
+      onclick="closeSidebar()"
+      aria-label="Close menu"
+    >
+      ×
+    </button>
+
+  </div>
+
+  <div class="sidebar-profile">
+    <div class="profile-icon">🙇</div>
+
+    <div>
+      <strong>Daily Sadhana</strong>
+      <span>Stay steady and sincere</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-menu">
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('dashboardPage', 'Dashboard', this)"
+    >
+      <span class="sidebar-item-icon">🏠</span>
+      <span>Dashboard</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('calendarPage', 'Calendar', this)"
+    >
+      <span class="sidebar-item-icon">📅</span>
+      <span>Calendar</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('streakPage', 'Streak', this)"
+    >
+      <span class="sidebar-item-icon">🔥</span>
+      <span>Streak</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('achievementsPage', 'Achievements', this)"
+    >
+      <span class="sidebar-item-icon">🏆</span>
+      <span>Achievements</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('heatmapPage', 'Heat Map', this)"
+    >
+      <span class="sidebar-item-icon">🌡️</span>
+      <span>Heat Map</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('goalsPage', 'Daily Goals', this)"
+    >
+      <span class="sidebar-item-icon">🎯</span>
+      <span>Daily Goals</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('readingTrackerPage', 'Reading Tracker', this)"
+    >
+      <span class="sidebar-item-icon">📖</span>
+      <span>Reading Tracker</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('reflectionPage', 'Daily Reflection', this)"
+    >
+      <span class="sidebar-item-icon">💭</span>
+      <span>Daily Reflection</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('exportPage', 'Export Data', this)"
+    >
+      <span class="sidebar-item-icon">📤</span>
+      <span>Export Data</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('backupPage', 'Backup & Restore', this)"
+    >
+      <span class="sidebar-item-icon">☁️</span>
+      <span>Backup & Restore</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('settingsPage', 'Settings', this)"
+    >
+      <span class="sidebar-item-icon">⚙️</span>
+      <span>Settings</span>
+    </button>
+
+    <button
+      type="button"
+      class="sidebar-item"
+      onclick="openFeaturePage('aboutPage', 'About', this)"
+    >
+      <span class="sidebar-item-icon">ℹ️</span>
+      <span>About</span>
+    </button>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <span>Version 1.0</span>
+    <strong>All glories to Śrīla Prabhupāda 🙏</strong>
+  </div>
+
+</aside>
+  
   <main id="container">
 
     <!-- Daily Tab -->
@@ -249,6 +412,329 @@
 
     </section>
 
+    <!-- Dashboard Page -->
+<section id="dashboardPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Dashboard</h2>
+      <p>Your complete sadhana overview</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🏠</div>
+    <h3>Dashboard</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Calendar Page -->
+<section id="calendarPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Calendar</h2>
+      <p>View your daily consistency</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>📅</div>
+    <h3>Calendar View</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Streak Page -->
+<section id="streakPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Streak</h2>
+      <p>Track your current and longest streak</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🔥</div>
+    <h3>Streak Tracker</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Achievements Page -->
+<section id="achievementsPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Achievements</h2>
+      <p>Your milestones and badges</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🏆</div>
+    <h3>Achievements</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Heat Map Page -->
+<section id="heatmapPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Heat Map</h2>
+      <p>Yearly consistency overview</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🌡️</div>
+    <h3>Sadhana Heat Map</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Goals Page -->
+<section id="goalsPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Daily Goals</h2>
+      <p>Set your personal daily targets</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🎯</div>
+    <h3>Daily Goals</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Reading Tracker Page -->
+<section id="readingTrackerPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Reading Tracker</h2>
+      <p>Track spiritual books and chapters</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>📖</div>
+    <h3>Reading Tracker</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Reflection Page -->
+<section id="reflectionPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Daily Reflection</h2>
+      <p>Write your daily spiritual realization</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>💭</div>
+    <h3>Daily Reflection</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Export Page -->
+<section id="exportPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Export Data</h2>
+      <p>Download and share your records</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>📤</div>
+    <h3>Export Data</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Backup Page -->
+<section id="backupPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Backup & Restore</h2>
+      <p>Protect your saved records</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>☁️</div>
+    <h3>Backup & Restore</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- Settings Page -->
+<section id="settingsPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>Settings</h2>
+      <p>Manage your app preferences</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>⚙️</div>
+    <h3>Settings</h3>
+    <p>This feature will be added soon.</p>
+  </div>
+
+</section>
+
+
+<!-- About Page -->
+<section id="aboutPage" class="feature-page">
+
+  <div class="feature-page-header">
+    <button
+      type="button"
+      class="feature-back-button"
+      onclick="returnToDailyPage()"
+    >
+      ←
+    </button>
+
+    <div>
+      <h2>About</h2>
+      <p>About the Sadhana Tracker</p>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div>🌿</div>
+    <h3>Sadhana Tracker</h3>
+    <p>Made for sincere daily spiritual practice.</p>
+  </div>
+
+</section>
+
   </main>
 
 
@@ -286,7 +772,7 @@
       ×
     </button>
   </div>
-  
+
   <script src="./index.js"></script>
 
 </body>
