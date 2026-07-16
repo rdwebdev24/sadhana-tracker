@@ -1685,3 +1685,178 @@ input[readonly] {
 .toast-close:hover {
   background: #eef7f2;
 }
+
+/* =================================
+   Today's Gita Verse Card
+================================= */
+
+.today-verse-card {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto 18px;
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(10, 35, 58, 0.94) 0%,
+      rgba(18, 56, 88, 0.85) 48%,
+      rgba(18, 56, 88, 0.45) 100%
+    ),
+    url("./images/krishna-arjuna-chariot.jpeg");
+
+  background-size: cover;
+  background-position: 60% 33%;
+  background-repeat: no-repeat;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 17px;
+
+  box-shadow:
+    0 10px 25px rgba(21, 58, 92, 0.22);
+}
+
+/* Left part */
+
+.today-verse-info {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.today-verse-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 21px;
+
+  background:
+    rgba(255, 255, 255, 0.13);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.16);
+
+  border-radius: 13px;
+}
+
+.today-verse-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+
+  color:
+    rgba(255, 255, 255, 0.67);
+}
+
+.today-verse-info h3 {
+  font-size: 20px;
+  color: white;
+}
+
+
+/* Vedabase Link */
+
+.today-vedabase-link {
+  min-height: 42px;
+  padding: 10px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  flex-shrink: 0;
+
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 6px 15px rgba(8, 31, 50, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.today-vedabase-link:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 9px 20px rgba(8, 31, 50, 0.23);
+}
+
+.today-vedabase-link span {
+  font-size: 16px;
+}
+
+
+/* Mobile */
+
+@media screen and (max-width: 480px) {
+
+  .today-verse-card {
+    padding: 14px;
+    gap: 10px;
+
+    border-radius: 15px;
+  }
+
+  .today-verse-icon {
+    width: 39px;
+    height: 39px;
+
+    font-size: 19px;
+  }
+
+  .today-verse-label {
+    font-size: 8px;
+    letter-spacing: 0.9px;
+  }
+
+  .today-verse-info h3 {
+    font-size: 17px;
+  }
+
+  .today-vedabase-link {
+    min-height: 38px;
+    padding: 9px 10px;
+
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .today-verse-card {
+    padding: 14px;
+
+    background-position: 65% center;
+  }
+}

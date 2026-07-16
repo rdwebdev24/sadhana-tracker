@@ -962,5 +962,134 @@ function drawSleepWakeGraph(data) {
   ctx.fillText("🌙 Sleep", padding + 120, 20);
 }
 
+function showTodaysGitaVerse() {
+
+  /*
+    Har chapter mein ślokas ki exact sankhya.
+
+    Index 0 = Chapter 1
+    Index 1 = Chapter 2
+    ...
+    Index 17 = Chapter 18
+  */
+
+  const versesPerChapter = [
+    47, // Chapter 1
+    72, // Chapter 2
+    43, // Chapter 3
+    42, // Chapter 4
+    29, // Chapter 5
+    47, // Chapter 6
+    30, // Chapter 7
+    28, // Chapter 8
+    34, // Chapter 9
+    42, // Chapter 10
+    55, // Chapter 11
+    20, // Chapter 12
+    35, // Chapter 13
+    27, // Chapter 14
+    20, // Chapter 15
+    24, // Chapter 16
+    28, // Chapter 17
+    78  // Chapter 18
+  ];
+
+  const referenceElement =
+    document.getElementById("todayVerseReference");
+
+  const vedabaseLink =
+    document.getElementById("todayVedabaseLink");
+
+  if (!referenceElement || !vedabaseLink) {
+    return;
+  }
+
+  /*
+    Local date ko YYYY-MM-DD mein convert karte hain.
+
+    UTC-based toISOString() intentionally use nahi kiya,
+    warna raat mein timezone ke karan next/previous date
+    select ho sakti hai.
+  */
+
+  const today = new Date();
+
+  const year = today.getFullYear();
+
+  const month = String(
+    today.getMonth() + 1
+  ).padStart(2, "0");
+
+  const day = String(
+    today.getDate()
+  ).padStart(2, "0");
+
+  const dateString = `${year}-${month}-${day}`;
+
+  /*
+    Date string se stable numeric seed banta hai.
+
+    Same date:
+    Same seed → same śloka
+
+    Next date:
+    Different seed → different śloka
+  */
+
+  let dateSeed = 0;
+
+  for (let i = 0; i < dateString.length; i++) {
+    dateSeed =
+      (dateSeed * 31 + dateString.charCodeAt(i)) >>> 0;
+  }
+
+  const totalVerses = versesPerChapter.reduce(
+    (total, verses) => total + verses,
+    0
+  );
+
+  /*
+    0 se 699 ke beech ek verse position.
+  */
+
+  let versePosition =
+    dateSeed % totalVerses;
+
+  let selectedChapter = 1;
+  let selectedVerse = 1;
+
+  /*
+    Global verse position ko chapter aur
+    verse number mein convert karte hain.
+  */
+
+  for (
+    let chapterIndex = 0;
+    chapterIndex < versesPerChapter.length;
+    chapterIndex++
+  ) {
+
+    const chapterVerseCount =
+      versesPerChapter[chapterIndex];
+
+    if (versePosition < chapterVerseCount) {
+
+      selectedChapter = chapterIndex + 1;
+      selectedVerse = versePosition + 1;
+
+      break;
+    }
+
+    versePosition -= chapterVerseCount;
+  }
+
+  referenceElement.textContent =
+    `BG ${selectedChapter}.${selectedVerse}`;
+
+  vedabaseLink.href =
+    `https://vedabase.io/en/library/bg/${selectedChapter}/${selectedVerse}/`;
+}
+
 showRecords();
 getLocation();
+showTodaysGitaVerse();
