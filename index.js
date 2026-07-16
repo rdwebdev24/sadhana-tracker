@@ -1164,6 +1164,10 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
     selectedPage.classList.add("active");
   }
 
+  if (pageId === "achievementsPage") {
+  showAchievements();
+}
+
   // Sidebar active item
   document
     .querySelectorAll(".sidebar-item")
@@ -1234,6 +1238,279 @@ function returnToDailyPage() {
   });
 }
 
+function getAchievements() {
+  const data =
+    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+
+  const validData = data
+    .filter(item => item.date)
+    .sort(
+      (a, b) =>
+        createLocalDate(a.date) -
+        createLocalDate(b.date)
+    );
+
+  let totalRounds = 0;
+  let totalReading = 0;
+  let totalHearing = 0;
+
+  let maxRounds = 0;
+  let maxReading = 0;
+  let maxHearing = 0;
+
+  validData.forEach(item => {
+    const rounds = Number(item.rounds) || 0;
+    const reading = Number(item.reading) || 0;
+    const hearing = Number(item.hearing) || 0;
+
+    totalRounds += rounds;
+    totalReading += reading;
+    totalHearing += hearing;
+
+    maxRounds = Math.max(maxRounds, rounds);
+    maxReading = Math.max(maxReading, reading);
+    maxHearing = Math.max(maxHearing, hearing);
+  });
+
+  let longestStreak = 0;
+  let currentStreak = 0;
+  let previousDate = null;
+
+  validData.forEach(item => {
+    const currentDate = createLocalDate(item.date);
+
+    if (!previousDate) {
+      currentStreak = 1;
+    } else {
+      const difference =
+        getDaysDifference(previousDate, currentDate);
+
+      if (difference === 1) {
+        currentStreak++;
+      } else if (difference > 1) {
+        currentStreak = 1;
+      }
+    }
+
+    longestStreak = Math.max(
+      longestStreak,
+      currentStreak
+    );
+
+    previousDate = currentDate;
+  });
+
+  return {
+    totalEntries: validData.length,
+
+    totalRounds,
+    totalReading,
+    totalHearing,
+
+    maxRounds,
+    maxReading,
+    maxHearing,
+
+    longestStreak,
+
+    milestones: [
+      {
+        icon: "🌱",
+        title: "First Entry",
+        description: "Save your first sadhana record",
+        unlocked: validData.length >= 1,
+        progress: Math.min(validData.length, 1),
+        target: 1
+      },
+      {
+        icon: "📿",
+        title: "100 Rounds",
+        description: "Complete 100 total rounds",
+        unlocked: totalRounds >= 100,
+        progress: Math.min(totalRounds, 100),
+        target: 100
+      },
+      {
+        icon: "📿",
+        title: "1000 Rounds",
+        description: "Complete 1000 total rounds",
+        unlocked: totalRounds >= 1000,
+        progress: Math.min(totalRounds, 1000),
+        target: 1000
+      },
+      {
+        icon: "🏆",
+        title: "10000 Rounds",
+        description: "Complete 10000 total rounds",
+        unlocked: totalRounds >= 10000,
+        progress: Math.min(totalRounds, 10000),
+        target: 10000
+      },
+      {
+        icon: "📖",
+        title: "10 Hours Reading",
+        description: "Complete 600 minutes of reading",
+        unlocked: totalReading >= 600,
+        progress: Math.min(totalReading, 600),
+        target: 600
+      },
+      {
+        icon: "📚",
+        title: "50 Hours Reading",
+        description: "Complete 3000 minutes of reading",
+        unlocked: totalReading >= 3000,
+        progress: Math.min(totalReading, 3000),
+        target: 3000
+      },
+      {
+        icon: "🎧",
+        title: "10 Hours Hearing",
+        description: "Complete 600 minutes of hearing",
+        unlocked: totalHearing >= 600,
+        progress: Math.min(totalHearing, 600),
+        target: 600
+      },
+      {
+        icon: "🔥",
+        title: "7 Day Streak",
+        description: "Maintain sadhana for 7 consecutive days",
+        unlocked: longestStreak >= 7,
+        progress: Math.min(longestStreak, 7),
+        target: 7
+      },
+      {
+        icon: "🔥",
+        title: "30 Day Streak",
+        description: "Maintain sadhana for 30 consecutive days",
+        unlocked: longestStreak >= 30,
+        progress: Math.min(longestStreak, 30),
+        target: 30
+      },
+      {
+        icon: "🔥",
+        title: "100 Day Streak",
+        description: "Maintain sadhana for 100 consecutive days",
+        unlocked: longestStreak >= 100,
+        progress: Math.min(longestStreak, 100),
+        target: 100
+      },
+      {
+        icon: "🗓️",
+        title: "100 Entries",
+        description: "Save 100 sadhana records",
+        unlocked: validData.length >= 100,
+        progress: Math.min(validData.length, 100),
+        target: 100
+      }
+    ]
+  };
+}
+
+function showAchievements() {
+  const container =
+    document.getElementById("achievementsContent");
+
+  if (!container) return;
+
+  const stats = getAchievements();
+
+  const milestoneCards = stats.milestones
+    .map(item => {
+      const percentage =
+        item.target > 0
+          ? Math.min(
+              100,
+              Math.round(
+                (item.progress / item.target) * 100
+              )
+            )
+          : 0;
+
+      return `
+        <div class="achievement-card ${
+          item.unlocked ? "unlocked" : "locked"
+        }">
+
+          <div class="achievement-icon">
+            ${item.unlocked ? item.icon : "🔒"}
+          </div>
+
+          <div class="achievement-information">
+            <div class="achievement-title-row">
+              <h4>${item.title}</h4>
+
+              <span>
+                ${item.unlocked ? "Unlocked" : "Locked"}
+              </span>
+            </div>
+
+            <p>${item.description}</p>
+
+            <div class="achievement-progress">
+              <div
+                class="achievement-progress-fill"
+                style="width: ${percentage}%"
+              ></div>
+            </div>
+
+            <small>
+              ${item.progress} / ${item.target}
+            </small>
+          </div>
+
+        </div>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <div class="achievement-section-heading">
+      <div>
+        <h3>🏆 Personal Records</h3>
+        <p>Your best lifetime performance</p>
+      </div>
+    </div>
+
+    <div class="personal-records-grid">
+
+      <div class="personal-record-card">
+        <span>🔥</span>
+        <small>Longest Streak</small>
+        <strong>${stats.longestStreak} days</strong>
+      </div>
+
+      <div class="personal-record-card">
+        <span>📿</span>
+        <small>Maximum Rounds</small>
+        <strong>${stats.maxRounds}</strong>
+      </div>
+
+      <div class="personal-record-card">
+        <span>📖</span>
+        <small>Maximum Reading</small>
+        <strong>${stats.maxReading} min</strong>
+      </div>
+
+      <div class="personal-record-card">
+        <span>🎧</span>
+        <small>Maximum Hearing</small>
+        <strong>${stats.maxHearing} min</strong>
+      </div>
+
+    </div>
+
+    <div class="achievement-section-heading milestone-heading">
+      <div>
+        <h3>🎯 Milestones</h3>
+        <p>Keep progressing to unlock achievements</p>
+      </div>
+    </div>
+
+    <div class="achievements-grid">
+      ${milestoneCards}
+    </div>
+  `;
+}
 
 showRecords();
 getLocation();

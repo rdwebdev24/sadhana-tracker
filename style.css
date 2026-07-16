@@ -2293,3 +2293,220 @@ input[readonly] {
     padding: 15px;
   }
 }
+
+/* =================================
+   Achievements
+================================= */
+
+.achievement-section-heading {
+  margin-bottom: 16px;
+}
+
+.achievement-section-heading h3 {
+  font-size: 19px;
+  color: var(--primary-dark);
+}
+
+.achievement-section-heading p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.milestone-heading {
+  margin-top: 28px;
+}
+
+.personal-records-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
+  gap: 14px;
+}
+
+.personal-record-card {
+  min-height: 140px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-small);
+}
+
+.personal-record-card > span {
+  margin-bottom: 9px;
+  font-size: 28px;
+}
+
+.personal-record-card small {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.personal-record-card strong {
+  margin-top: 7px;
+
+  font-size: 23px;
+  color: var(--primary-dark);
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(270px, 1fr));
+
+  gap: 14px;
+}
+
+.achievement-card {
+  padding: 17px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  box-shadow: var(--shadow-small);
+}
+
+.achievement-card.locked {
+  opacity: 0.72;
+  background: #f7f9fb;
+}
+
+.achievement-card.unlocked {
+  border-color: #c7dfd2;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f0faf5
+    );
+}
+
+.achievement-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 22px;
+
+  background: var(--primary-light);
+  border-radius: 13px;
+}
+
+.achievement-information {
+  min-width: 0;
+  flex: 1;
+}
+
+.achievement-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.achievement-title-row h4 {
+  font-size: 14px;
+  color: var(--primary-dark);
+}
+
+.achievement-title-row span {
+  padding: 4px 7px;
+
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  color: var(--text-secondary);
+  background: #edf2f6;
+
+  border-radius: 20px;
+}
+
+.achievement-card.unlocked
+.achievement-title-row span {
+  color: #176344;
+  background: #def3e8;
+}
+
+.achievement-information p {
+  margin-top: 5px;
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  color: var(--text-secondary);
+}
+
+.achievement-progress {
+  width: 100%;
+  height: 7px;
+
+  margin-top: 12px;
+
+  overflow: hidden;
+
+  background: #e5ebf0;
+  border-radius: 20px;
+}
+
+.achievement-progress-fill {
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--primary),
+      #4f8db9
+    );
+
+  border-radius: 20px;
+}
+
+.achievement-information small {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+@media screen and (max-width: 480px) {
+  .personal-records-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .personal-record-card {
+    min-height: 120px;
+    padding: 15px 10px;
+  }
+
+  .personal-record-card strong {
+    font-size: 19px;
+  }
+
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
