@@ -2,60 +2,60 @@ document.getElementById("date").valueAsDate = new Date();
 
 function getLocation() {
 
-    if (!navigator.geolocation) {
-        alert("Geolocation is not supported.");
-        return;
-    }
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported.");
+    return;
+  }
 
-    navigator.geolocation.getCurrentPosition(async (position) => {
+  navigator.geolocation.getCurrentPosition(async (position) => {
 
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
-        );
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+    );
 
-        const data = await response.json();
+    const data = await response.json();
 
-        const city =
-            data.address.city ||
-            data.address.town ||
-            data.address.village ||
-            data.address.state_district ||
-            "";
+    const city =
+      data.address.city ||
+      data.address.town ||
+      data.address.village ||
+      data.address.state_district ||
+      "";
 
-        document.getElementById("location").value = city;
+    document.getElementById("location").value = city;
 
-    }, () => {
-        document.getElementById("location").value = "Location not available";
-    });
+  }, () => {
+    document.getElementById("location").value = "Location not available";
+  });
 
 }
 
 function saveSadhana() {
-    const entry = {
-      date: document.getElementById("date").value,
-      location: document.getElementById("location").value,
-      rounds: document.getElementById("rounds").value,
-      Rounds_finish_before: document.getElementById("Rounds_finish_before").value,
-      reading: document.getElementById("reading").value,
-      hearing: document.getElementById("hearing").value,
-      wakeTime: document.getElementById("wakeTime").value,
-      sleepTime: document.getElementById("sleepTime").value,
-      Seva: document.getElementById("Seva").value,
-      
-    };
+  const entry = {
+    date: document.getElementById("date").value,
+    location: document.getElementById("location").value,
+    rounds: document.getElementById("rounds").value,
+    Rounds_finish_before: document.getElementById("Rounds_finish_before").value,
+    reading: document.getElementById("reading").value,
+    hearing: document.getElementById("hearing").value,
+    wakeTime: document.getElementById("wakeTime").value,
+    sleepTime: document.getElementById("sleepTime").value,
+    Seva: document.getElementById("Seva").value,
 
-    let data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
+  };
 
-    data = data.filter(item => item.date !== entry.date);
-    data.push(entry);
+  let data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
 
-    localStorage.setItem("sadhanaData", JSON.stringify(data));
+  data = data.filter(item => item.date !== entry.date);
+  data.push(entry);
 
-    showRecords();
-    showToast("Sadhana saved successfully!");
+  localStorage.setItem("sadhanaData", JSON.stringify(data));
+
+  showRecords();
+  showToast("Sadhana saved successfully!");
 }
 
 let toastTimer;
@@ -389,8 +389,8 @@ function openSelectedMonth(monthKey) {
     <span>
       ${selectedRecords.length}
       ${selectedRecords.length === 1
-        ? "saved record"
-        : "saved records"}
+      ? "saved record"
+      : "saved records"}
     </span>
   `;
 
@@ -503,7 +503,7 @@ function sendRecordToWhatsApp(recordDate) {
   const phoneNumber = "918919930834";
 
   const message =
-`Hare Krishna Prabhu ji 🙏
+    `Hare Krishna Prabhu ji 🙏
 
 🌿 Sadhana Report
 
@@ -1165,8 +1165,12 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
   }
 
   if (pageId === "achievementsPage") {
-  showAchievements();
-}
+    showAchievements();
+  }
+
+  if (pageId === "reflectionPage") {
+    initializeReflectionPage();
+  }
 
   // Sidebar active item
   document
@@ -1419,16 +1423,15 @@ function showAchievements() {
       const percentage =
         item.target > 0
           ? Math.min(
-              100,
-              Math.round(
-                (item.progress / item.target) * 100
-              )
+            100,
+            Math.round(
+              (item.progress / item.target) * 100
             )
+          )
           : 0;
 
       return `
-        <div class="achievement-card ${
-          item.unlocked ? "unlocked" : "locked"
+        <div class="achievement-card ${item.unlocked ? "unlocked" : "locked"
         }">
 
           <div class="achievement-icon">
@@ -1512,6 +1515,361 @@ function showAchievements() {
   `;
 }
 
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+
+  const month = String(
+    date.getMonth() + 1
+  ).padStart(2, "0");
+
+  const day = String(
+    date.getDate()
+  ).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function initializeReflectionPage() {
+  const dateInput =
+    document.getElementById("reflectionDate");
+
+  if (!dateInput) return;
+
+  if (!dateInput.value) {
+    dateInput.value = getLocalDateString();
+  }
+
+  loadReflectionForSelectedDate();
+  showReflectionRecords();
+}
+
+function saveDailyReflection() {
+  const date =
+    document.getElementById("reflectionDate").value;
+
+  const inspired =
+    document.getElementById("reflectionInspired")
+      .value.trim();
+
+  const learned =
+    document.getElementById("reflectionLearned")
+      .value.trim();
+
+  const improve =
+    document.getElementById("reflectionImprove")
+      .value.trim();
+
+  const notes =
+    document.getElementById("reflectionNotes")
+      .value.trim();
+
+  if (!date) {
+    showToast("Please select a reflection date.");
+    return;
+  }
+
+  if (
+    !inspired &&
+    !learned &&
+    !improve &&
+    !notes
+  ) {
+    showToast(
+      "Write at least one reflection before saving."
+    );
+
+    return;
+  }
+
+  const reflection = {
+    date,
+    inspired,
+    learned,
+    improve,
+    notes,
+    updatedAt: new Date().toISOString()
+  };
+
+  let reflections =
+    JSON.parse(
+      localStorage.getItem("dailyReflections")
+    ) || [];
+
+  // Same date ki old reflection remove hogi
+  reflections = reflections.filter(
+    item => item.date !== date
+  );
+
+  reflections.push(reflection);
+
+  localStorage.setItem(
+    "dailyReflections",
+    JSON.stringify(reflections)
+  );
+
+  showReflectionRecords();
+
+  showToast("Daily reflection saved successfully!");
+}
+
+function loadReflectionForSelectedDate() {
+  const dateInput =
+    document.getElementById("reflectionDate");
+
+  if (!dateInput) return;
+
+  const selectedDate = dateInput.value;
+
+  const reflections =
+    JSON.parse(
+      localStorage.getItem("dailyReflections")
+    ) || [];
+
+  const reflection = reflections.find(
+    item => item.date === selectedDate
+  );
+
+  document.getElementById("reflectionInspired").value =
+    reflection?.inspired || "";
+
+  document.getElementById("reflectionLearned").value =
+    reflection?.learned || "";
+
+  document.getElementById("reflectionImprove").value =
+    reflection?.improve || "";
+
+  document.getElementById("reflectionNotes").value =
+    reflection?.notes || "";
+}
+
+function showReflectionRecords() {
+  const recordsContainer =
+    document.getElementById("reflectionRecords");
+
+  const countElement =
+    document.getElementById("reflectionCount");
+
+  if (!recordsContainer || !countElement) return;
+
+  const reflections =
+    JSON.parse(
+      localStorage.getItem("dailyReflections")
+    ) || [];
+
+  reflections.sort(
+    (a, b) =>
+      createLocalDate(b.date) -
+      createLocalDate(a.date)
+  );
+
+  countElement.textContent =
+    `${reflections.length} ${reflections.length === 1
+      ? "entry"
+      : "entries"
+    }`;
+
+  recordsContainer.innerHTML = "";
+
+  if (reflections.length === 0) {
+    recordsContainer.innerHTML = `
+      <div class="reflection-empty-state">
+        <div>📝</div>
+        <h3>No reflections saved</h3>
+        <p>Your daily reflections will appear here.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  reflections.forEach(reflection => {
+    recordsContainer.innerHTML +=
+      createReflectionCard(reflection);
+  });
+}
+
+function createReflectionCard(reflection) {
+  const cardId =
+    `reflection-${reflection.date}`;
+
+  return `
+    <article
+      class="reflection-record-card collapsed"
+      id="${cardId}"
+    >
+
+      <button
+        type="button"
+        class="reflection-record-toggle"
+        onclick="toggleReflectionCard('${cardId}')"
+      >
+
+        <div class="reflection-record-date-icon">
+          💭
+        </div>
+
+        <div class="reflection-record-title">
+          <strong>
+            ${formatDisplayDate(reflection.date)}
+          </strong>
+
+          <span>
+            ${getReflectionPreview(reflection)}
+          </span>
+        </div>
+
+        <span class="reflection-record-arrow">
+         ⌄
+        </span>
+
+      </button>
+
+      <div class="reflection-record-details">
+
+        ${createReflectionField(
+    "🌿 What inspired you today?",
+    reflection.inspired
+  )}
+
+        ${createReflectionField(
+    "📖 What did you learn today?",
+    reflection.learned
+  )}
+
+        ${createReflectionField(
+    "🎯 What would you like to improve tomorrow?",
+    reflection.improve
+  )}
+
+        ${createReflectionField(
+    "🪷 Anything else you want to remember?",
+    reflection.notes
+  )}
+
+        <div class="reflection-record-actions">
+
+          <button
+            type="button"
+            class="reflection-edit-button"
+            onclick="editReflection('${reflection.date}')"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            type="button"
+            class="reflection-delete-button"
+            onclick="deleteReflection('${reflection.date}')"
+          >
+            🗑️ Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+  `;
+}
+
+function createReflectionField(title, value) {
+  if (!value) return "";
+
+  return `
+    <div class="reflection-record-field">
+      <h4>${title}</h4>
+      <p>${escapeHtml(value)}</p>
+    </div>
+  `;
+}
+
+function getReflectionPreview(reflection) {
+  const preview =
+    reflection.inspired ||
+    reflection.learned ||
+    reflection.improve ||
+    reflection.notes ||
+    "Saved reflection";
+
+  return preview.length > 70
+    ? `${preview.slice(0, 70)}...`
+    : preview;
+}
+
+function toggleReflectionCard(cardId) {
+  const card = document.getElementById(cardId);
+
+  if (!card) return;
+
+  card.classList.toggle("collapsed");
+  card.classList.toggle("expanded");
+}
+
+function editReflection(date) {
+  const dateInput =
+    document.getElementById("reflectionDate");
+
+  if (!dateInput) return;
+
+  dateInput.value = date;
+
+  loadReflectionForSelectedDate();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function deleteReflection(date) {
+  const shouldDelete = confirm(
+    "Are you sure you want to delete this reflection?"
+  );
+
+  if (!shouldDelete) return;
+
+  let reflections =
+    JSON.parse(
+      localStorage.getItem("dailyReflections")
+    ) || [];
+
+  reflections = reflections.filter(
+    item => item.date !== date
+  );
+
+  localStorage.setItem(
+    "dailyReflections",
+    JSON.stringify(reflections)
+  );
+
+  const selectedDate =
+    document.getElementById("reflectionDate")?.value;
+
+  if (selectedDate === date) {
+    clearReflectionForm();
+  }
+
+  showReflectionRecords();
+  showToast("Reflection deleted.");
+}
+
+function clearReflectionForm() {
+  document.getElementById("reflectionInspired").value = "";
+  document.getElementById("reflectionLearned").value = "";
+  document.getElementById("reflectionImprove").value = "";
+  document.getElementById("reflectionNotes").value = "";
+}
+
+function escapeHtml(value) {
+  const element = document.createElement("div");
+
+  element.textContent = value;
+
+  return element.innerHTML.replace(
+    /\n/g,
+    "<br>"
+  );
+}
 showRecords();
 getLocation();
 showTodaysGitaVerse();

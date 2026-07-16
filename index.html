@@ -596,7 +596,7 @@
 </section>
 
 
-<!-- Reflection Page -->
+<!-- Daily Reflection Page -->
 <section id="reflectionPage" class="feature-page">
 
   <div class="feature-page-header">
@@ -610,14 +610,107 @@
 
     <div>
       <h2>Daily Reflection</h2>
-      <p>Write your daily spiritual realization</p>
+      <p>Record your daily spiritual realizations</p>
     </div>
   </div>
 
-  <div class="coming-soon-card">
-    <div>💭</div>
-    <h3>Daily Reflection</h3>
-    <p>This feature will be added soon.</p>
+  <!-- Reflection Form -->
+  <div class="reflection-form-card">
+
+    <div class="reflection-form-heading">
+      <div class="reflection-heading-icon">💭</div>
+
+      <div>
+        <h3>Today's Reflection</h3>
+        <p>Pause, reflect and record what mattered today.</p>
+      </div>
+    </div>
+
+    <div class="reflection-date-group">
+      <label for="reflectionDate">
+        📅 Reflection Date
+      </label>
+
+      <input
+        type="date"
+        id="reflectionDate"
+        onchange="loadReflectionForSelectedDate()"
+      >
+    </div>
+
+    <div class="reflection-question">
+      <label for="reflectionInspired">
+        🌿 What inspired you today?
+      </label>
+
+      <textarea
+        id="reflectionInspired"
+        rows="3"
+        placeholder="A verse, experience, association or thought that inspired you..."
+      ></textarea>
+    </div>
+
+    <div class="reflection-question">
+      <label for="reflectionLearned">
+        📖 What did you learn today?
+      </label>
+
+      <textarea
+        id="reflectionLearned"
+        rows="3"
+        placeholder="Write any realization or lesson from today..."
+      ></textarea>
+    </div>
+
+    <div class="reflection-question">
+      <label for="reflectionImprove">
+        🎯 What would you like to improve tomorrow?
+      </label>
+
+      <textarea
+        id="reflectionImprove"
+        rows="3"
+        placeholder="Mention one thing you would like to do better tomorrow..."
+      ></textarea>
+    </div>
+
+    <div class="reflection-question">
+      <label for="reflectionNotes">
+        🪷 Anything else you want to remember?
+      </label>
+
+      <textarea
+        id="reflectionNotes"
+        rows="4"
+        placeholder="Write freely about chanting, reading, seva, gratitude, struggles or association..."
+      ></textarea>
+    </div>
+
+    <button
+      type="button"
+      class="save-reflection-button"
+      onclick="saveDailyReflection()"
+    >
+      <span>✓</span>
+      Save Reflection
+    </button>
+
+  </div>
+
+  <!-- Previous Reflections -->
+  <div class="reflection-history-section">
+
+    <div class="reflection-history-heading">
+      <div>
+        <h3>📜 Past Reflections</h3>
+        <p>Your previously saved spiritual reflections</p>
+      </div>
+
+      <span id="reflectionCount">0 entries</span>
+    </div>
+
+    <div id="reflectionRecords"></div>
+
   </div>
 
 </section>
