@@ -1090,3 +1090,353 @@ input[readonly] {
     font-size: 17px;
   }
 }
+
+/* =================================
+   History Filter Tabs
+================================= */
+
+.history-tabs {
+  width: 100%;
+
+  margin-bottom: 22px;
+  padding: 6px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+
+  background: #e9eff5;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.history-tab-btn {
+  min-height: 44px;
+  padding: 10px 14px;
+
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-tab-btn:hover {
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.history-tab-btn.active {
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-dark)
+    );
+
+  box-shadow:
+    0 5px 12px rgba(31, 78, 121, 0.2);
+}
+
+
+/* =================================
+   History View Heading
+================================= */
+
+.history-view-heading {
+  margin-bottom: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-view-heading h3 {
+  font-size: 18px;
+  color: var(--primary-dark);
+}
+
+.history-view-heading span {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+
+/* =================================
+   Entry Heading
+================================= */
+
+.entry-date-heading {
+  margin-bottom: 13px;
+  padding-bottom: 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.entry-date-heading > span {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 20px;
+
+  background: var(--primary-light);
+  border-radius: 12px;
+}
+
+.entry-date-heading div {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.entry-date-heading strong {
+  font-size: 15px;
+  color: var(--primary-dark);
+}
+
+.entry-date-heading small {
+  overflow: hidden;
+
+  font-size: 12px;
+  color: var(--text-secondary);
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field strong {
+  color: var(--primary-dark);
+}
+
+
+/* =================================
+   Monthly Archive
+================================= */
+
+.month-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.month-item {
+  width: 100%;
+  min-height: 80px;
+
+  padding: 14px 17px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  color: var(--text-primary);
+  text-align: left;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  box-shadow: var(--shadow-small);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.month-item:hover {
+  transform: translateY(-2px);
+
+  border-color: #a9bfd1;
+  box-shadow: var(--shadow-medium);
+}
+
+.month-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 22px;
+
+  background: var(--primary-light);
+  border-radius: 13px;
+}
+
+.month-information {
+  min-width: 130px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.month-information strong {
+  font-size: 15px;
+  color: var(--primary-dark);
+}
+
+.month-information span {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.month-summary {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.month-summary span {
+  padding: 6px 9px;
+
+  background: #f5f8fa;
+  border-radius: 20px;
+}
+
+.month-arrow {
+  margin-left: 4px;
+
+  font-size: 28px;
+  color: var(--primary);
+}
+
+
+/* =================================
+   Back to Months
+================================= */
+
+.back-to-months {
+  width: auto;
+  min-height: 40px;
+
+  padding: 9px 14px;
+
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+
+  background: var(--primary-light);
+  border: 1px solid #cbdce9;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.back-to-months:hover {
+  background: #dcebf5;
+}
+
+
+/* =================================
+   Empty History
+================================= */
+
+.empty-state {
+  grid-column: 1 / -1;
+
+  padding: 55px 20px;
+
+  text-align: center;
+
+  background: white;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-medium);
+}
+
+.empty-icon {
+  margin-bottom: 12px;
+  font-size: 42px;
+}
+
+.empty-state h3 {
+  color: var(--primary-dark);
+}
+
+.empty-state p {
+  margin-top: 7px;
+
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+
+/* =================================
+   Mobile History
+================================= */
+
+@media screen and (max-width: 600px) {
+
+  .history-tabs {
+    padding: 5px;
+  }
+
+  .history-tab-btn {
+    padding: 9px 5px;
+    font-size: 11px;
+  }
+
+  .history-view-heading {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .month-item {
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .month-icon {
+    width: 43px;
+    height: 43px;
+  }
+
+  .month-information {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .month-summary {
+    display: none;
+  }
+
+  .month-arrow {
+    margin-left: auto;
+  }
+}

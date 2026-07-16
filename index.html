@@ -12,7 +12,7 @@
   >
 
   <title>Sadhana Tracker</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="./manifext.json">
 
 <meta name="theme-color" content="#1f4e79">
 
@@ -185,20 +185,56 @@ href="images/icon-192.png">
 
 
     <!-- History Tab -->
-    <section id="historyTab" class="tab-page">
+   <section id="historyTab" class="tab-page">
 
-      <div class="page-heading">
-        <div>
-          <h2>Previous Records</h2>
-          <p>Review your daily sadhana entries</p>
-        </div>
+  <div class="page-heading">
+    <div>
+      <h2>Previous Records</h2>
+      <p>Review your daily sadhana entries</p>
+    </div>
 
-        <span class="page-icon">📜</span>
-      </div>
+    <span class="page-icon">📜</span>
+  </div>
 
-      <div id="records"></div>
+  <!-- History Filter Tabs -->
+  <div class="history-tabs">
 
-    </section>
+    <button
+      type="button"
+      class="history-tab-btn active"
+      onclick="openHistoryTab('all', this)"
+    >
+      📋 All Records
+    </button>
+
+    <button
+      type="button"
+      class="history-tab-btn"
+      onclick="openHistoryTab('weekly', this)"
+    >
+      📅 Last 7 Days
+    </button>
+
+    <button
+      type="button"
+      class="history-tab-btn"
+      onclick="openHistoryTab('monthly', this)"
+    >
+      🗓️ Monthly
+    </button>
+
+  </div>
+
+  <!-- Selected Filter Heading -->
+  <div id="historyViewHeading" class="history-view-heading"></div>
+
+  <!-- Month List -->
+  <div id="monthList" class="month-list"></div>
+
+  <!-- Records -->
+  <div id="records"></div>
+
+</section>
 
 
     <!-- Analytics Tab -->

@@ -58,73 +58,414 @@ function saveSadhana() {
     alert("Sadhana saved successfully!");
 }
 
+let currentHistoryView = "all";
+
 function showRecords() {
-    const recordsDiv = document.getElementById("records");
-    const data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
+  openHistoryTab(currentHistoryView);
+}
 
-    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+function openHistoryTab(view, clickedButton = null) {
+  currentHistoryView = view;
 
-    recordsDiv.innerHTML = "";
-if (data.length === 0) {
+  const recordsDiv = document.getElementById("records");
+  const monthListDiv = document.getElementById("monthList");
+  const headingDiv = document.getElementById("historyViewHeading");
+
+  const data =
+    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+
+  data.sort(
+    (a, b) => createLocalDate(b.date) - createLocalDate(a.date)
+  );
+
+  recordsDiv.innerHTML = "";
+  monthListDiv.innerHTML = "";
+  headingDiv.innerHTML = "";
+
+  // Active tab button change
+  if (clickedButton) {
+    document
+      .querySelectorAll(".history-tab-btn")
+      .forEach(button => {
+        button.classList.remove("active");
+      });
+
+    clickedButton.classList.add("active");
+  }
+
+  if (view === "all") {
+    headingDiv.innerHTML = `
+      <h3>All Records</h3>
+      <span>${data.length} saved records</span>
+    `;
+
+    renderHistoryRecords(data);
+  }
+
+  if (view === "weekly") {
+    const weeklyRecords = getLastSevenDaysRecords(data);
+
+    headingDiv.innerHTML = `
+      <h3>Last 7 Days</h3>
+      <span>${weeklyRecords.length} saved records</span>
+    `;
+
+    renderHistoryRecords(weeklyRecords);
+  }
+
+  if (view === "monthly") {
+    headingDiv.innerHTML = `
+      <h3>Monthly Archive</h3>
+      <span>Select a month to view records</span>
+    `;
+
+    renderMonthList(data);
+  }
+}
+
+function renderHistoryRecords(records) {
+  const recordsDiv = document.getElementById("records");
+
+  recordsDiv.innerHTML = "";
+
+  if (records.length === 0) {
+    showEmptyHistory(
+      "No records found",
+      "No sadhana records are available for this period."
+    );
+
+    return;
+  }
+
+  records.forEach(item => {
+    recordsDiv.innerHTML += createHistoryCard(item);
+  });
+}
+
+function getLastSevenDaysRecords(data) {
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
+  const sevenDaysAgo = new Date(today);
+
+  sevenDaysAgo.setDate(
+    today.getDate() - 6
+  );
+
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+
+  return data.filter(item => {
+    if (!item.date) return false;
+
+    const itemDate = createLocalDate(item.date);
+
+    return (
+      itemDate >= sevenDaysAgo &&
+      itemDate <= today
+    );
+  });
+}
+
+function renderMonthList(data) {
+  const monthListDiv =
+    document.getElementById("monthList");
+
+  const recordsDiv =
+    document.getElementById("records");
+
+  monthListDiv.innerHTML = "";
+  recordsDiv.innerHTML = "";
+
+  if (data.length === 0) {
+    showEmptyHistory(
+      "No monthly records",
+      "Save your daily sadhana to create a monthly archive."
+    );
+
+    return;
+  }
+
+  const monthlyGroups = {};
+
+  data.forEach(item => {
+    if (!item.date) return;
+
+    const date = createLocalDate(item.date);
+
+    const monthKey =
+      `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}`;
+
+    if (!monthlyGroups[monthKey]) {
+      monthlyGroups[monthKey] = [];
+    }
+
+    monthlyGroups[monthKey].push(item);
+  });
+
+  const sortedMonths =
+    Object.keys(monthlyGroups).sort().reverse();
+
+  sortedMonths.forEach(monthKey => {
+    const records = monthlyGroups[monthKey];
+
+    const totalRounds = records.reduce(
+      (total, item) =>
+        total + (Number(item.rounds) || 0),
+      0
+    );
+
+    const totalReading = records.reduce(
+      (total, item) =>
+        total + (Number(item.reading) || 0),
+      0
+    );
+
+    monthListDiv.innerHTML += `
+      <button
+        type="button"
+        class="month-item"
+        onclick="openSelectedMonth('${monthKey}')"
+      >
+
+        <div class="month-icon">🗓️</div>
+
+        <div class="month-information">
+          <strong>${formatMonthName(monthKey)}</strong>
+
+          <span>
+            ${records.length}
+            ${records.length === 1 ? "record" : "records"}
+          </span>
+        </div>
+
+        <div class="month-summary">
+          <span>📿 ${totalRounds}</span>
+          <span>📖 ${totalReading} min</span>
+        </div>
+
+        <span class="month-arrow">›</span>
+
+      </button>
+    `;
+  });
+}
+
+function createLocalDate(dateString) {
+  const [year, month, day] =
+    dateString.split("-").map(Number);
+
+  return new Date(year, month - 1, day);
+}
+
+function formatDisplayDate(dateString) {
+  if (!dateString) {
+    return "Date not added";
+  }
+
+  const date = createLocalDate(dateString);
+
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+}
+
+function formatMonthName(monthKey) {
+  const [year, month] =
+    monthKey.split("-").map(Number);
+
+  const date = new Date(year, month - 1, 1);
+
+  return date.toLocaleDateString("en-IN", {
+    month: "long",
+    year: "numeric"
+  });
+}
+
+function formatTime(time) {
+  if (!time) {
+    return "Not added";
+  }
+
+  const [hours, minutes] =
+    time.split(":").map(Number);
+
+  const date = new Date();
+
+  date.setHours(hours, minutes, 0, 0);
+
+  return date.toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  });
+}
+
+function showEmptyHistory(title, message) {
+  const recordsDiv =
+    document.getElementById("records");
+
   recordsDiv.innerHTML = `
     <div class="empty-state">
-      <div>📭</div>
-      <h3>No records found</h3>
-      <p>Your saved sadhana records will appear here.</p>
+
+      <div class="empty-icon">📭</div>
+
+      <h3>${title}</h3>
+
+      <p>${message}</p>
+
     </div>
   `;
-  return;
 }
-    data.forEach((item,index) => {
-      recordsDiv.innerHTML += `
-      <div class="entry">
-        <div class="field">📅 Date : ${item.date}</div>
-        <div class="field">📍 Location: ${item.location || "Not added"}</div>
-        <div class="field">📿 Rounds: ${item.rounds || 0}</div>
-        <div class="field">⏰ Rounds finish before: ${item.Rounds_finish_before || "Not added"}</div>
-        <div class="field">📖 Reading: ${item.reading || 0} min</div>
-        <div class="field">🎧 Hearing: ${item.hearing || 0} min</div>
-        <div class="field">🌅 Wake-up: ${item.wakeTime || "Not added"}</div>
-        <div class="field">🌙 Sleep Time: ${item.sleepTime || "Not added"}</div>
-        <div class="field">🛕 Seva: ${item.Seva || "Not added"}</div>
 
-        <button onclick="sendToWhatsApp(${index})">Send WhatsApp</button>
+function openSelectedMonth(monthKey) {
+  const data =
+    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+
+  const selectedRecords = data
+    .filter(item => {
+      if (!item.date) return false;
+
+      return item.date.startsWith(monthKey);
+    })
+    .sort(
+      (a, b) =>
+        createLocalDate(b.date) -
+        createLocalDate(a.date)
+    );
+
+  const monthListDiv =
+    document.getElementById("monthList");
+
+  const headingDiv =
+    document.getElementById("historyViewHeading");
+
+  monthListDiv.innerHTML = `
+    <button
+      type="button"
+      class="back-to-months"
+      onclick="openHistoryTab('monthly')"
+    >
+      ← Back to all months
+    </button>
+  `;
+
+  headingDiv.innerHTML = `
+    <h3>${formatMonthName(monthKey)}</h3>
+
+    <span>
+      ${selectedRecords.length}
+      ${selectedRecords.length === 1
+        ? "saved record"
+        : "saved records"}
+    </span>
+  `;
+
+  renderHistoryRecords(selectedRecords);
+}
+
+function createHistoryCard(item) {
+  return `
+    <div class="entry">
+
+      <div class="entry-date-heading">
+        <span>📅</span>
+
+        <div>
+          <strong>${formatDisplayDate(item.date)}</strong>
+          <small>${item.location || "Location not added"}</small>
+        </div>
+      </div>
+
+      <div class="field">
+        📿 Rounds:
+        <strong>${item.rounds || 0}</strong>
+      </div>
+
+      <div class="field">
+        ⏰ Rounds finished at:
+        <strong>
+          ${formatTime(item.Rounds_finish_before)}
+        </strong>
+      </div>
+
+      <div class="field">
+        📖 Reading:
+        <strong>${item.reading || 0} min</strong>
+      </div>
+
+      <div class="field">
+        🎧 Hearing:
+        <strong>${item.hearing || 0} min</strong>
+      </div>
+
+      <div class="field">
+        🌅 Wake-up:
+        <strong>${formatTime(item.wakeTime)}</strong>
+      </div>
+
+      <div class="field">
+        🌙 Sleep Time:
+        <strong>${formatTime(item.sleepTime)}</strong>
+      </div>
+
+      <div class="field">
+        🛕 Seva:
+        <strong>${item.Seva || "Not added"}</strong>
+      </div>
+
+      <button
+        type="button"
+        onclick="sendRecordToWhatsApp('${item.date}')"
+      >
+        Send WhatsApp
+      </button>
+
     </div>
-
-      `;
-    });
-
-
+  `;
 }
 
-function sendToWhatsApp(index) {  
-  const data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
-  data.sort((a, b) => new Date(b.date) - new Date(a.date));
+function sendRecordToWhatsApp(recordDate) {
+  const data =
+    JSON.parse(localStorage.getItem("sadhanaData")) || [];
 
-  const item = data[index];
+  const item = data.find(
+    record => record.date === recordDate
+  );
 
-  const phoneNumber = "918919930834"; // yahan apna number daalo, country code ke saath
+  if (!item) {
+    alert("Record not found.");
+    return;
+  }
+
+  const phoneNumber = "918919930834";
 
   const message =
-`Hare krishna Prabhu ji 🙏
+`Hare Krishna Prabhu ji 🙏
+
 🌿 Sadhana Report
 
-📅 Date: ${item.date}
-📍Location: ${item.location || "Not added"}
-📿Rounds: ${item.rounds || 0}
-⏰ Rounds finish before: ${item.Rounds_finish_before || "Not added"}
+📅 Date: ${formatDisplayDate(item.date)}
+📍 Location: ${item.location || "Not added"}
+📿 Rounds: ${item.rounds || 0}
+⏰ Rounds finished at: ${formatTime(item.Rounds_finish_before)}
 📖 Reading: ${item.reading || 0} min
 🎧 Hearing: ${item.hearing || 0} min
-🌅 Wake-up: ${item.wakeTime || "Not added"}
-🌙 Sleep Time: ${item.sleepTime || "Not added"}
+🌅 Wake-up: ${formatTime(item.wakeTime)}
+🌙 Sleep Time: ${formatTime(item.sleepTime)}
 🛕 Seva: ${item.Seva || "Not added"}`;
 
-  const encodedMessage = encodeURIComponent(message);
+  const encodedMessage =
+    encodeURIComponent(message);
 
-  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+  const whatsappURL =
+    `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
   window.open(whatsappURL, "_blank");
-} 
+}
 
 function openTab(tabId, btn) {
   document.querySelectorAll(".tab-page").forEach(tab => {
