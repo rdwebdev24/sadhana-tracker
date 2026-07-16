@@ -302,7 +302,25 @@ href="images/icon-192.png">
     </button>
 
   </nav>
+  
+<div id="toast" class="toast">
+  <div class="toast-icon">✓</div>
 
+  <div class="toast-content">
+    <strong>Saved Successfully</strong>
+    <span id="toastMessage">
+      Your sadhana has been saved.
+    </span>
+  </div>
+
+  <button
+    type="button"
+    class="toast-close"
+    onclick="hideToast()"
+  >
+    ×
+  </button>
+</div>
   <script src="./index.js"></script>
 
 </body>

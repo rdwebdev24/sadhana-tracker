@@ -55,9 +55,39 @@ function saveSadhana() {
     localStorage.setItem("sadhanaData", JSON.stringify(data));
 
     showRecords();
-    alert("Sadhana saved successfully!");
+    showToast("Sadhana saved successfully!");
 }
 
+let toastTimer;
+
+function showToast(message) {
+  const toast =
+    document.getElementById("toast");
+
+  const toastMessage =
+    document.getElementById("toastMessage");
+
+  if (!toast || !toastMessage) return;
+
+  toastMessage.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    hideToast();
+  }, 2800);
+}
+
+function hideToast() {
+  const toast =
+    document.getElementById("toast");
+
+  if (!toast) return;
+
+  toast.classList.remove("show");
+}
 let currentHistoryView = "all";
 
 function showRecords() {
