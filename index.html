@@ -6,18 +6,14 @@
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Sadhana Tracker</title>
-<link rel="manifest" href="./manifext.json">
+  <link rel="manifest" href="./manifext.json">
 
-<meta name="theme-color" content="#1f4e79">
+  <meta name="theme-color" content="#1f4e79">
 
-<link rel="apple-touch-icon"
-href="images/icon-192.png">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
   <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -39,38 +35,33 @@ href="images/icon-192.png">
     <!-- Daily Tab -->
     <section id="dailyTab" class="tab-page active">
 
-<div class="today-verse-card">
+      <div class="today-verse-card">
 
-  <div class="today-verse-info">
+        <div class="today-verse-info">
 
-    <div class="today-verse-icon">
-      🪷
-    </div>
+          <div class="today-verse-icon">
+            🪷
+          </div>
 
-    <div>
-      <span class="today-verse-label">
-        TODAY'S GITA ŚLOKA
-      </span>
+          <div>
+            <span class="today-verse-label">
+              TODAY'S GITA ŚLOKA
+            </span>
 
-      <h3 id="todayVerseReference">
-        BG 1.1
-      </h3>
-    </div>
+            <h3 id="todayVerseReference">
+              BG 1.1
+            </h3>
+          </div>
 
-  </div>
+        </div>
 
-  <a
-    id="todayVedabaseLink"
-    class="today-vedabase-link"
-    href="https://vedabase.io/en/library/bg/1/1/"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    View on Vedabase
-    <span>↗</span>
-  </a>
+        <a id="todayVedabaseLink" class="today-vedabase-link" href="https://vedabase.io/en/library/bg/1/1/"
+          target="_blank" rel="noopener noreferrer">
+          View on Vedabase
+          <span>↗</span>
+        </a>
 
-</div>
+      </div>
 
       <div class="form-card">
 
@@ -100,12 +91,7 @@ href="images/icon-192.png">
               Location
             </label>
 
-            <input
-              type="text"
-              id="location"
-              placeholder="Detecting location..."
-              readonly
-            >
+            <input type="text" id="location" placeholder="Detecting location..." readonly>
           </div>
 
           <div class="input-group">
@@ -114,12 +100,7 @@ href="images/icon-192.png">
               Chanting Rounds
             </label>
 
-            <input
-              type="number"
-              id="rounds"
-              placeholder="Enter number of rounds"
-              min="0"
-            >
+            <input type="number" id="rounds" placeholder="Enter number of rounds" min="0">
           </div>
 
           <div class="input-group">
@@ -128,10 +109,7 @@ href="images/icon-192.png">
               Rounds Finished At
             </label>
 
-            <input
-              type="time"
-              id="Rounds_finish_before"
-            >
+            <input type="time" id="Rounds_finish_before">
           </div>
 
           <div class="input-group">
@@ -141,12 +119,7 @@ href="images/icon-192.png">
             </label>
 
             <div class="input-with-unit">
-              <input
-                type="number"
-                id="reading"
-                placeholder="Reading duration"
-                min="0"
-              >
+              <input type="number" id="reading" placeholder="Reading duration" min="0">
 
               <span>min</span>
             </div>
@@ -159,12 +132,7 @@ href="images/icon-192.png">
             </label>
 
             <div class="input-with-unit">
-              <input
-                type="number"
-                id="hearing"
-                placeholder="Hearing duration"
-                min="0"
-              >
+              <input type="number" id="hearing" placeholder="Hearing duration" min="0">
 
               <span>min</span>
             </div>
@@ -194,20 +162,12 @@ href="images/icon-192.png">
               Seva
             </label>
 
-            <textarea
-              id="Seva"
-              rows="3"
-              placeholder="Mention the seva performed today"
-            ></textarea>
+            <textarea id="Seva" rows="3" placeholder="Mention the seva performed today"></textarea>
           </div>
 
         </div>
 
-        <button
-          type="button"
-          class="save-button"
-          onclick="saveSadhana()"
-        >
+        <button type="button" class="save-button" onclick="saveSadhana()">
           <span>✓</span>
           Save Sadhana
         </button>
@@ -218,56 +178,44 @@ href="images/icon-192.png">
 
 
     <!-- History Tab -->
-   <section id="historyTab" class="tab-page">
+    <section id="historyTab" class="tab-page">
 
-  <div class="page-heading">
-    <div>
-      <h2>Previous Records</h2>
-      <p>Review your daily sadhana entries</p>
-    </div>
+      <div class="page-heading">
+        <div>
+          <h2>Previous Records</h2>
+          <p>Review your daily sadhana entries</p>
+        </div>
 
-    <span class="page-icon">📜</span>
-  </div>
+        <span class="page-icon">📜</span>
+      </div>
 
-  <!-- History Filter Tabs -->
-  <div class="history-tabs">
+      <!-- History Filter Tabs -->
+      <div class="history-tabs">
 
-    <button
-      type="button"
-      class="history-tab-btn active"
-      onclick="openHistoryTab('all', this)"
-    >
-      📋 All Records
-    </button>
+        <button type="button" class="history-tab-btn active" onclick="openHistoryTab('all', this)">
+          📋 All Records
+        </button>
 
-    <button
-      type="button"
-      class="history-tab-btn"
-      onclick="openHistoryTab('weekly', this)"
-    >
-      📅 Last 7 Days
-    </button>
+        <button type="button" class="history-tab-btn" onclick="openHistoryTab('weekly', this)">
+          📅 Last 7 Days
+        </button>
 
-    <button
-      type="button"
-      class="history-tab-btn"
-      onclick="openHistoryTab('monthly', this)"
-    >
-      🗓️ Monthly
-    </button>
+        <button type="button" class="history-tab-btn" onclick="openHistoryTab('monthly', this)">
+          🗓️ Monthly
+        </button>
 
-  </div>
+      </div>
 
-  <!-- Selected Filter Heading -->
-  <div id="historyViewHeading" class="history-view-heading"></div>
+      <!-- Selected Filter Heading -->
+      <div id="historyViewHeading" class="history-view-heading"></div>
 
-  <!-- Month List -->
-  <div id="monthList" class="month-list"></div>
+      <!-- Month List -->
+      <div id="monthList" class="month-list"></div>
 
-  <!-- Records -->
-  <div id="records"></div>
+      <!-- Records -->
+      <div id="records"></div>
 
-</section>
+    </section>
 
 
     <!-- Analytics Tab -->
@@ -307,54 +255,40 @@ href="images/icon-192.png">
   <!-- Bottom Navigation -->
   <nav class="bottom-tabs">
 
-    <button
-      type="button"
-      class="tab-btn active"
-      onclick="openTab('dailyTab', this)"
-    >
+    <button type="button" class="tab-btn active" onclick="openTab('dailyTab', this)">
       <span class="tab-icon">📝</span>
       <span>Daily</span>
     </button>
 
-    <button
-      type="button"
-      class="tab-btn"
-      onclick="openTab('historyTab', this)"
-    >
+    <button type="button" class="tab-btn" onclick="openTab('historyTab', this)">
       <span class="tab-icon">📜</span>
       <span>History</span>
     </button>
 
-    <button
-      type="button"
-      class="tab-btn"
-      onclick="openTab('analyticsTab', this)"
-    >
+    <button type="button" class="tab-btn" onclick="openTab('analyticsTab', this)">
       <span class="tab-icon">📊</span>
       <span>Analytics</span>
     </button>
 
   </nav>
 
-<div id="toast" class="toast">
-  <div class="toast-icon">✓</div>
+  <div id="toast" class="toast">
+    <div class="toast-icon">✓</div>
 
-  <div class="toast-content">
-    <strong>Saved Successfully</strong>
-    <span id="toastMessage">
-      Your sadhana has been saved.
-    </span>
+    <div class="toast-content">
+      <strong>Saved Successfully</strong>
+      <span id="toastMessage">
+        Your sadhana has been saved.
+      </span>
+    </div>
+
+    <button type="button" class="toast-close" onclick="hideToast()">
+      ×
+    </button>
   </div>
-
-  <button
-    type="button"
-    class="toast-close"
-    onclick="hideToast()"
-  >
-    ×
-  </button>
-</div>
+  
   <script src="./index.js"></script>
 
 </body>
+
 </html>

@@ -46,11 +46,9 @@ body {
 
   color: var(--text-primary);
   background:
-    radial-gradient(
-      circle at top left,
+    radial-gradient(circle at top left,
       rgba(31, 78, 121, 0.09),
-      transparent 350px
-    ),
+      transparent 350px),
     var(--background);
 }
 
@@ -63,11 +61,9 @@ body {
   padding: 24px 20px;
   color: white;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       var(--primary-dark),
-      var(--primary)
-    );
+      var(--primary));
   box-shadow: var(--shadow-medium);
 }
 
@@ -305,7 +301,7 @@ input[readonly] {
   padding-right: 56px;
 }
 
-.input-with-unit > span {
+.input-with-unit>span {
   position: absolute;
   top: 50%;
   right: 14px;
@@ -339,11 +335,9 @@ input[readonly] {
   font-weight: 700;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       var(--primary),
-      var(--primary-dark)
-    );
+      var(--primary-dark));
 
   border: none;
   border-radius: 12px;
@@ -456,11 +450,9 @@ input[readonly] {
   height: 4px;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       var(--primary),
-      #5b8bb5
-    );
+      #5b8bb5);
 }
 
 .entry:hover {
@@ -579,7 +571,7 @@ input[readonly] {
   color: var(--text-secondary);
 }
 
-.chart-heading > span {
+.chart-heading>span {
   font-size: 25px;
 }
 
@@ -660,11 +652,9 @@ input[readonly] {
 .tab-btn.active {
   color: white;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       var(--primary),
-      var(--primary-dark)
-    );
+      var(--primary-dark));
 
   box-shadow: 0 6px 14px rgba(31, 78, 121, 0.22);
 }
@@ -847,11 +837,9 @@ input[readonly] {
   color: white;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #ff7a18,
-      #e84b2c
-    );
+      #e84b2c);
 
   border: none;
 
@@ -886,7 +874,7 @@ input[readonly] {
   flex-direction: column;
 }
 
-.streak-content > span {
+.streak-content>span {
   font-size: 14px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
@@ -911,11 +899,9 @@ input[readonly] {
 
 .average-card {
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #f2f7fb
-    );
+      #f2f7fb);
 }
 
 .average-card b {
@@ -993,7 +979,7 @@ input[readonly] {
   gap: 14px;
 }
 
-.period-stats > div {
+.period-stats>div {
   padding: 17px 12px;
 
   text-align: center;
@@ -1055,7 +1041,7 @@ input[readonly] {
     gap: 9px;
   }
 
-  .period-stats > div {
+  .period-stats>div {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1120,11 +1106,9 @@ input[readonly] {
   color: white;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       var(--primary),
-      var(--primary-dark)
-    );
+      var(--primary-dark));
 
   box-shadow:
     0 5px 12px rgba(31, 78, 121, 0.2);
@@ -1169,7 +1153,7 @@ input[readonly] {
   border-bottom: 1px solid var(--border);
 }
 
-.entry-date-heading > span {
+.entry-date-heading>span {
   width: 42px;
   height: 42px;
 
@@ -1558,10 +1542,11 @@ input[readonly] {
 
   cursor: pointer;
 }
+
 .entry .whatsapp-button {
   width: 100%;
   background: var(--success);
-} 
+}
 
 /* =================================
    Success Toast
@@ -1582,8 +1567,7 @@ input[readonly] {
   gap: 12px;
 
   transform:
-    translate(-50%, -25px)
-    scale(0.96);
+    translate(-50%, -25px) scale(0.96);
 
   opacity: 0;
   visibility: hidden;
@@ -1608,8 +1592,7 @@ input[readonly] {
   visibility: visible;
 
   transform:
-    translate(-50%, 0)
-    scale(1);
+    translate(-50%, 0) scale(1);
 }
 
 .toast-icon {
@@ -1627,11 +1610,9 @@ input[readonly] {
   font-weight: 800;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #2f9e68,
-      #1f7a50
-    );
+      #1f7a50);
 
   border-radius: 50%;
 
@@ -1706,12 +1687,10 @@ input[readonly] {
   gap: 18px;
 
   background-image:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(10, 35, 58, 0.94) 0%,
       rgba(18, 56, 88, 0.85) 48%,
-      rgba(18, 56, 88, 0.45) 100%
-    ),
+      rgba(18, 56, 88, 0.45) 100%),
     url("./images/krishna-arjuna-chariot.jpeg");
 
   background-size: cover;
@@ -1857,6 +1836,6 @@ input[readonly] {
   .today-verse-card {
     padding: 14px;
 
-    background-position: 65% center;
+    background-position: 65% 33%;
   }
 }
