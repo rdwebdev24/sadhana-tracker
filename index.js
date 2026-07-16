@@ -368,64 +368,93 @@ function openSelectedMonth(monthKey) {
 }
 
 function createHistoryCard(item) {
+  const cardId = `record-${item.date}`;
+
   return `
-    <div class="entry">
-
-      <div class="entry-date-heading">
-        <span>📅</span>
-
-        <div>
-          <strong>${formatDisplayDate(item.date)}</strong>
-          <small>${item.location || "Location not added"}</small>
-        </div>
-      </div>
-
-      <div class="field">
-        📿 Rounds:
-        <strong>${item.rounds || 0}</strong>
-      </div>
-
-      <div class="field">
-        ⏰ Rounds finished at:
-        <strong>
-          ${formatTime(item.Rounds_finish_before)}
-        </strong>
-      </div>
-
-      <div class="field">
-        📖 Reading:
-        <strong>${item.reading || 0} min</strong>
-      </div>
-
-      <div class="field">
-        🎧 Hearing:
-        <strong>${item.hearing || 0} min</strong>
-      </div>
-
-      <div class="field">
-        🌅 Wake-up:
-        <strong>${formatTime(item.wakeTime)}</strong>
-      </div>
-
-      <div class="field">
-        🌙 Sleep Time:
-        <strong>${formatTime(item.sleepTime)}</strong>
-      </div>
-
-      <div class="field">
-        🛕 Seva:
-        <strong>${item.Seva || "Not added"}</strong>
-      </div>
+    <div class="entry collapsed" id="${cardId}">
 
       <button
         type="button"
-        onclick="sendRecordToWhatsApp('${item.date}')"
+        class="entry-toggle"
+        onclick="toggleHistoryCard('${cardId}')"
       >
-        Send WhatsApp
+
+        <div class="entry-date-heading">
+
+          <span class="date-icon">📅</span>
+
+          <div class="entry-title">
+            <strong>${formatDisplayDate(item.date)}</strong>
+            <small>${item.location || "Location not added"}</small>
+          </div>
+
+          
+
+        </div>
+
       </button>
+
+
+      <div class="entry-details">
+
+        <div class="field">
+          📿 Rounds:
+          <strong>${item.rounds || 0}</strong>
+        </div>
+
+        <div class="field">
+          ⏰ Rounds finished at:
+          <strong>
+            ${formatTime(item.Rounds_finish_before)}
+          </strong>
+        </div>
+
+        <div class="field">
+          📖 Reading:
+          <strong>${item.reading || 0} min</strong>
+        </div>
+
+        <div class="field">
+          🎧 Hearing:
+          <strong>${item.hearing || 0} min</strong>
+        </div>
+
+        <div class="field">
+          🌅 Wake-up:
+          <strong>${formatTime(item.wakeTime)}</strong>
+        </div>
+
+        <div class="field">
+          🌙 Sleep Time:
+          <strong>${formatTime(item.sleepTime)}</strong>
+        </div>
+
+        <div class="field">
+          🛕 Seva:
+          <strong>${item.Seva || "Not added"}</strong>
+        </div>
+
+        <button
+          type="button"
+          class="whatsapp-button"
+          onclick="sendRecordToWhatsApp('${item.date}')"
+        >
+          Send WhatsApp
+        </button>
+
+      </div>
 
     </div>
   `;
+}
+
+function toggleHistoryCard(cardId) {
+  const card = document.getElementById(cardId);
+
+  if (!card) return;
+
+  card.classList.toggle("collapsed");
+  card.classList.toggle("expanded");
 }
 
 function sendRecordToWhatsApp(recordDate) {
