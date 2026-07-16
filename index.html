@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Sadhana Tracker</title>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">🌿</div>
+
+      <div>
+        <h1>Sadhana Tracker</h1>
+        <p>Track your daily spiritual practices</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="container">
+
+    <!-- Daily Tab -->
+    <section id="dailyTab" class="tab-page active">
+
+      <div class="form-card">
+
+        <div class="card-heading">
+          <span class="heading-icon">📝</span>
+
+          <div>
+            <h2>Daily Sadhana</h2>
+            <p>Enter today's spiritual activities</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="input-group">
+            <label for="date">
+              <span>📅</span>
+              Date
+            </label>
+
+            <input type="date" id="date">
+          </div>
+
+          <div class="input-group">
+            <label for="location">
+              <span>📍</span>
+              Location
+            </label>
+
+            <input
+              type="text"
+              id="location"
+              placeholder="Detecting location..."
+              readonly
+            >
+          </div>
+
+          <div class="input-group">
+            <label for="rounds">
+              <span>📿</span>
+              Chanting Rounds
+            </label>
+
+            <input
+              type="number"
+              id="rounds"
+              placeholder="Enter number of rounds"
+              min="0"
+            >
+          </div>
+
+          <div class="input-group">
+            <label for="Rounds_finish_before">
+              <span>⏰</span>
+              Rounds Finished At
+            </label>
+
+            <input
+              type="time"
+              id="Rounds_finish_before"
+            >
+          </div>
+
+          <div class="input-group">
+            <label for="reading">
+              <span>📖</span>
+              Reading
+            </label>
+
+            <div class="input-with-unit">
+              <input
+                type="number"
+                id="reading"
+                placeholder="Reading duration"
+                min="0"
+              >
+
+              <span>min</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="hearing">
+              <span>🎧</span>
+              Hearing
+            </label>
+
+            <div class="input-with-unit">
+              <input
+                type="number"
+                id="hearing"
+                placeholder="Hearing duration"
+                min="0"
+              >
+
+              <span>min</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="wakeTime">
+              <span>🌅</span>
+              Wake-up Time
+            </label>
+
+            <input type="time" id="wakeTime">
+          </div>
+
+          <div class="input-group">
+            <label for="sleepTime">
+              <span>🌙</span>
+              Sleep Time
+            </label>
+
+            <input type="time" id="sleepTime">
+          </div>
+
+          <div class="input-group full-width">
+            <label for="Seva">
+              <span>🛕</span>
+              Seva
+            </label>
+
+            <textarea
+              id="Seva"
+              rows="3"
+              placeholder="Mention the seva performed today"
+            ></textarea>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="save-button"
+          onclick="saveSadhana()"
+        >
+          <span>✓</span>
+          Save Sadhana
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- History Tab -->
+    <section id="historyTab" class="tab-page">
+
+      <div class="page-heading">
+        <div>
+          <h2>Previous Records</h2>
+          <p>Review your daily sadhana entries</p>
+        </div>
+
+        <span class="page-icon">📜</span>
+      </div>
+
+      <div id="records"></div>
+
+    </section>
+
+
+    <!-- Analytics Tab -->
+    <section id="analyticsTab" class="tab-page">
+
+      <div class="page-heading">
+        <div>
+          <h2>Sadhana Analytics</h2>
+          <p>Overview of your spiritual consistency</p>
+        </div>
+
+        <span class="page-icon">📊</span>
+      </div>
+
+      <div id="analytics"></div>
+
+      <div class="chart-card">
+        <div class="chart-heading">
+          <div>
+            <h3>Sleep and Wake-up Pattern</h3>
+            <p>Your recorded daily routine</p>
+          </div>
+
+          <span>🌅</span>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="sleepWakeChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-tabs">
+
+    <button
+      type="button"
+      class="tab-btn active"
+      onclick="openTab('dailyTab', this)"
+    >
+      <span class="tab-icon">📝</span>
+      <span>Daily</span>
+    </button>
+
+    <button
+      type="button"
+      class="tab-btn"
+      onclick="openTab('historyTab', this)"
+    >
+      <span class="tab-icon">📜</span>
+      <span>History</span>
+    </button>
+
+    <button
+      type="button"
+      class="tab-btn"
+      onclick="openTab('analyticsTab', this)"
+    >
+      <span class="tab-icon">📊</span>
+      <span>Analytics</span>
+    </button>
+
+  </nav>
+
+  <script src="./index.js"></script>
+
+</body>
+</html>
