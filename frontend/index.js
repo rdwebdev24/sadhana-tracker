@@ -1,6 +1,7 @@
 document.getElementById("date").valueAsDate = new Date();
 
-const API_BASE_URL = "http://localhost:3000/api";
+// const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "https://sadhana-tracker-4njd.onrender.com/api";
 let sadhanaData = [];
 
 async function loadSadhanaData(forceRefresh = false) {
