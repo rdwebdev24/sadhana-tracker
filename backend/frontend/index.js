@@ -542,14 +542,13 @@ function toggleHistoryCard(cardId) {
   card.classList.toggle("expanded");
 }
 
-function sendRecordToWhatsApp(recordDate) {
-  const data =
-    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+async function sendRecordToWhatsApp(recordDate) {
+  const response = await fetch(`${API_BASE_URL}/sadhana`);
+const result = await response.json();
 
-  const item = data.find(
-    record => record.date === recordDate
-  );
-
+const item = result.data.find(
+  record => record.date === recordDate
+);
   if (!item) {
     alert("Record not found.");
     return;
@@ -1957,6 +1956,22 @@ function escapeHtml(value) {
   return element.innerHTML.replace(
     /\n/g,
     "<br>"
+  );
+}
+
+function toggleDarkMode() {
+  const isDark =
+    document.getElementById("darkModeToggle").checked;
+
+  if (isDark) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+
+  localStorage.setItem(
+    "theme",
+    isDark ? "dark" : "light"
   );
 }
 
