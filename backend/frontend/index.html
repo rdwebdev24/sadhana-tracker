@@ -79,7 +79,7 @@
     <button
       type="button"
       class="sidebar-item"
-      onclick="openFeaturePage('dashboardPage', 'Dashboard', this)"
+      onclick="returnToDailyPage(this)"
     >
       <span class="sidebar-item-icon">🏠</span>
       <span>Dashboard</span>
@@ -94,14 +94,7 @@
       <span>Calendar</span>
     </button>
 
-    <!-- <button
-      type="button"
-      class="sidebar-item"
-      onclick="openFeaturePage('streakPage', 'Streak', this)"
-    >
-      <span class="sidebar-item-icon">🔥</span>
-      <span>Streak</span>
-    </button> -->
+
 
     <button
       type="button"
@@ -827,7 +820,7 @@
 
 
   <!-- Bottom Navigation -->
-  <nav class="bottom-tabs">
+  <nav class="bottom-tabs" id="bottomTabs">
 
     <button type="button" class="tab-btn active" onclick="openTab('dailyTab', this)">
       <span class="tab-icon">📝</span>

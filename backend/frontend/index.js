@@ -1218,6 +1218,13 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
     selectedPage.classList.add("active");
   }
 
+  if (pageId === "dashboardPage") {
+  document.getElementById("bottomTabs").style.display = "flex";
+} else {
+  document.getElementById("bottomTabs").style.display = "none";
+}
+  // document.getElementById("bottomTabs").style.display = "none";
+
   if (pageId === "achievementsPage") {
     showAchievements();
   }
@@ -1252,7 +1259,7 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
   });
 }
 
-function returnToDailyPage() {
+function returnToDailyPage(clickedItem) {
   document
     .querySelectorAll(".feature-page")
     .forEach(page => {
@@ -1290,10 +1297,13 @@ function returnToDailyPage() {
       item.classList.remove("active");
     });
 
+closeSidebar();
+
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+  document.getElementById("bottomTabs").style.display = "flex";
 }
 
 function getAchievements() {

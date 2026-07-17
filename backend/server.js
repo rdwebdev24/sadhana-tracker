@@ -21,7 +21,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "frontend")));
 
-console.log(express.static(path.join(__dirname, "frontend")),"aaa")
 
 app.use("/api/sadhana", sadhanaRoutes);
 app.use("/api/reflections", reflectionRoutes);
