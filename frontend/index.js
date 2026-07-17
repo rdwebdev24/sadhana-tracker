@@ -1,5 +1,22 @@
 document.getElementById("date").valueAsDate = new Date();
 
+const API_BASE_URL = "http://localhost:3000/api";
+let sadhanaData = [];
+
+async function loadSadhanaData(forceRefresh = false) {
+
+  if (!forceRefresh && sadhanaData.length > 0) {
+    return;
+  }
+
+  const response = await fetch(`${API_BASE_URL}/sadhana`);
+
+  const result = await response.json();
+
+  sadhanaData = result.data || [];
+
+}
+
 function getLocation() {
 
   if (!navigator.geolocation) {
@@ -33,7 +50,7 @@ function getLocation() {
 
 }
 
-function saveSadhana() {
+async function saveSadhana() {
   const entry = {
     date: document.getElementById("date").value,
     location: document.getElementById("location").value,
@@ -47,12 +64,35 @@ function saveSadhana() {
 
   };
 
-  let data = JSON.parse(localStorage.getItem("sadhanaData")) || [];
+try {
 
-  data = data.filter(item => item.date !== entry.date);
-  data.push(entry);
+  const response = await fetch(`${API_BASE_URL}/sadhana`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(entry)
+  });
 
-  localStorage.setItem("sadhanaData", JSON.stringify(data));
+  const result = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message);
+  }
+  // 👇 Cache clear
+  sadhanaData = [];
+   // 👇 Fresh data MongoDB se load hoga
+  showRecords();
+
+  showToast("Sadhana saved successfully!");
+
+} catch (error) {
+
+  console.error(error);
+
+  showToast("Failed to save sadhana.");
+
+}
 
   showRecords();
   showToast("Sadhana saved successfully!");
@@ -94,15 +134,18 @@ function showRecords() {
   openHistoryTab(currentHistoryView);
 }
 
-function openHistoryTab(view, clickedButton = null) {
+async function openHistoryTab(view, clickedButton = null) {
+  console.log("openHistoryTab called with view:", view);
   currentHistoryView = view;
 
   const recordsDiv = document.getElementById("records");
   const monthListDiv = document.getElementById("monthList");
   const headingDiv = document.getElementById("historyViewHeading");
 
-  const data =
-    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+await loadSadhanaData();
+
+const data = sadhanaData;
+console.log("Loaded sadhanaData:", data);
 
   data.sort(
     (a, b) => createLocalDate(b.date) - createLocalDate(a.date)
@@ -133,10 +176,11 @@ function openHistoryTab(view, clickedButton = null) {
   }
 
   if (view === "weekly") {
-    const weeklyRecords = getLastSevenDaysRecords(data);
+      const weeklyRecords = getCurrentWeekRecords(data);
+   
 
     headingDiv.innerHTML = `
-      <h3>Last 7 Days</h3>
+      <h3>This week</h3>
       <span>${weeklyRecords.length} saved records</span>
     `;
 
@@ -172,28 +216,39 @@ function renderHistoryRecords(records) {
   });
 }
 
-function getLastSevenDaysRecords(data) {
+function getCurrentWeekRecords(data) {
+
   const today = new Date();
-  today.setHours(23, 59, 59, 999);
 
-  const sevenDaysAgo = new Date(today);
+  // Monday of current week
+  const startOfWeek = new Date(today);
 
-  sevenDaysAgo.setDate(
-    today.getDate() - 6
-  );
+  const day = today.getDay(); // Sunday=0, Monday=1...
 
-  sevenDaysAgo.setHours(0, 0, 0, 0);
+  const diff = day === 0 ? -6 : 1 - day;
+
+  startOfWeek.setDate(today.getDate() + diff);
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  // Sunday of current week
+  const endOfWeek = new Date(startOfWeek);
+
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
 
   return data.filter(item => {
+
     if (!item.date) return false;
 
     const itemDate = createLocalDate(item.date);
 
     return (
-      itemDate >= sevenDaysAgo &&
-      itemDate <= today
+      itemDate >= startOfWeek &&
+      itemDate <= endOfWeek
     );
+
   });
+
 }
 
 function renderMonthList(data) {
@@ -351,9 +406,8 @@ function showEmptyHistory(title, message) {
   `;
 }
 
-function openSelectedMonth(monthKey) {
-  const data =
-    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+async function openSelectedMonth(monthKey) {
+  const data = sadhanaData;
 
   const selectedRecords = data
     .filter(item => {
@@ -576,8 +630,7 @@ function openTab(tabId, btn) {
 function showAnalytics() {
   const analyticsDiv = document.getElementById("analytics");
 
-  const data =
-    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+  const data = sadhanaData;
 
   let totalRounds = 0;
   let totalReading = 0;
@@ -1243,8 +1296,7 @@ function returnToDailyPage() {
 }
 
 function getAchievements() {
-  const data =
-    JSON.parse(localStorage.getItem("sadhanaData")) || [];
+  const data = sadhanaData;
 
   const validData = data
     .filter(item => item.date)
@@ -1539,11 +1591,10 @@ function initializeReflectionPage() {
     dateInput.value = getLocalDateString();
   }
 
-  loadReflectionForSelectedDate();
   showReflectionRecords();
 }
 
-function saveDailyReflection() {
+async function saveDailyReflection() {
   const date =
     document.getElementById("reflectionDate").value;
 
@@ -1590,29 +1641,37 @@ function saveDailyReflection() {
     updatedAt: new Date().toISOString()
   };
 
-  let reflections =
-    JSON.parse(
-      localStorage.getItem("dailyReflections")
-    ) || [];
-
-  // Same date ki old reflection remove hogi
-  reflections = reflections.filter(
-    item => item.date !== date
+ try {
+  const response = await fetch(
+    `${API_BASE_URL}/reflections`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(reflection)
+    }
   );
 
-  reflections.push(reflection);
+  const result = await response.json();
 
-  localStorage.setItem(
-    "dailyReflections",
-    JSON.stringify(reflections)
-  );
+  if (!result.success) {
+    throw new Error(result.message);
+  }
 
   showReflectionRecords();
 
   showToast("Daily reflection saved successfully!");
+
+  clearReflectionForm()
+
+} catch (err) {
+  console.error(err);
+  showToast("Failed to save reflection.");
+}
 }
 
-function loadReflectionForSelectedDate() {
+async function loadReflectionForSelectedDate() {
   const dateInput =
     document.getElementById("reflectionDate");
 
@@ -1620,10 +1679,15 @@ function loadReflectionForSelectedDate() {
 
   const selectedDate = dateInput.value;
 
-  const reflections =
-    JSON.parse(
-      localStorage.getItem("dailyReflections")
-    ) || [];
+try {
+
+  const response = await fetch(
+    `${API_BASE_URL}/reflections`
+  );
+
+  const result = await response.json();
+
+  const reflections = result.data || [];
 
   const reflection = reflections.find(
     item => item.date === selectedDate
@@ -1640,9 +1704,13 @@ function loadReflectionForSelectedDate() {
 
   document.getElementById("reflectionNotes").value =
     reflection?.notes || "";
+
+} catch (err) {
+  console.error(err);
+}
 }
 
-function showReflectionRecords() {
+async function showReflectionRecords() {
   const recordsContainer =
     document.getElementById("reflectionRecords");
 
@@ -1651,10 +1719,13 @@ function showReflectionRecords() {
 
   if (!recordsContainer || !countElement) return;
 
-  const reflections =
-    JSON.parse(
-      localStorage.getItem("dailyReflections")
-    ) || [];
+ const response = await fetch(
+  `${API_BASE_URL}/reflections`
+);
+
+const result = await response.json();
+
+const reflections = result.data || [];
 
   reflections.sort(
     (a, b) =>
@@ -1821,36 +1892,42 @@ function editReflection(date) {
   });
 }
 
-function deleteReflection(date) {
+async function deleteReflection(date) {
   const shouldDelete = confirm(
     "Are you sure you want to delete this reflection?"
   );
 
   if (!shouldDelete) return;
 
-  let reflections =
-    JSON.parse(
-      localStorage.getItem("dailyReflections")
-    ) || [];
+  try {
 
-  reflections = reflections.filter(
-    item => item.date !== date
-  );
+    const response = await fetch(
+      `${API_BASE_URL}/reflections/${date}`,
+      {
+        method: "DELETE"
+      }
+    );
 
-  localStorage.setItem(
-    "dailyReflections",
-    JSON.stringify(reflections)
-  );
+    const result = await response.json();
 
-  const selectedDate =
-    document.getElementById("reflectionDate")?.value;
+    if (!result.success) {
+      throw new Error(result.message);
+    }
 
-  if (selectedDate === date) {
-    clearReflectionForm();
+    const selectedDate =
+      document.getElementById("reflectionDate")?.value;
+
+    if (selectedDate === date) {
+      clearReflectionForm();
+    }
+
+    showReflectionRecords();
+    showToast("Reflection deleted.");
+
+  } catch (err) {
+    console.error(err);
+    showToast("Failed to delete reflection.");
   }
-
-  showReflectionRecords();
-  showToast("Reflection deleted.");
 }
 
 function clearReflectionForm() {
@@ -1858,6 +1935,7 @@ function clearReflectionForm() {
   document.getElementById("reflectionLearned").value = "";
   document.getElementById("reflectionImprove").value = "";
   document.getElementById("reflectionNotes").value = "";
+  document.getElementById("reflectionDate").value = "";
 }
 
 function escapeHtml(value) {
@@ -1870,6 +1948,7 @@ function escapeHtml(value) {
     "<br>"
   );
 }
+
 showRecords();
 getLocation();
 showTodaysGitaVerse();
