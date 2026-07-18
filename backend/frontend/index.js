@@ -20,12 +20,31 @@ async function loadSadhanaData(forceRefresh = false) {
 
   sadhanaData = result.data || [];
 
+  const today = new Date().toISOString().split("T")[0];
+
+const todayRecord = sadhanaData.find(record => record.date === today);
+
+if (todayRecord) {
+
+    document.getElementById("date").value = todayRecord.date || "";
+    document.getElementById("location").value = todayRecord.location || "";
+    document.getElementById("rounds").value = todayRecord.rounds || "";
+    document.getElementById("Rounds_finish_before").value = todayRecord.Rounds_finish_before || "";
+    document.getElementById("reading").value = todayRecord.reading || "";
+    document.getElementById("hearing").value = todayRecord.hearing || "";
+    document.getElementById("wakeTime").value = todayRecord.wakeTime || "";
+    document.getElementById("sleepTime").value = todayRecord.sleepTime || "";
+    document.getElementById("Seva").value = todayRecord.Seva || "";
+
+}
+
 }
 
 async function loadTodayGoals() {
 
     try {
-
+        document.getElementById("goalLoader").style.display = "block";
+        document.getElementById("goalList").style.display = "none";
         const response = await fetch(`${API_BASE_URL}/daily-goals`);
 
         const result = await response.json();
@@ -41,9 +60,11 @@ async function loadTodayGoals() {
         }
 
         renderGoals();
-
-    } catch (error) {
-
+        document.getElementById("goalLoader").style.display = "none";
+        document.getElementById("goalList").style.display = "block";
+      } catch (error) {
+        document.getElementById("goalLoader").style.display = "none";
+        document.getElementById("goalList").style.display = "block";
         console.error("Error loading goals:", error);
 
     }
@@ -1266,6 +1287,7 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
 
   if (pageId === "goalsPage") {
     loadTodayGoals();
+    loadGoalRecords();
   }
 
   // Sidebar active item
@@ -2072,8 +2094,7 @@ async function toggleGoal(index) {
     todayGoals[index].completed = !todayGoals[index].completed;
     renderGoals();
     await saveTodayGoals();
-
-
+    
 }
 
 async function deleteGoal(index) {
@@ -2178,14 +2199,17 @@ function cancelEditGoal() {
 async function loadGoalRecords() {
 
     try {
-
+        document.getElementById("goalRecordsLoader").style.display = "block";
+        document.getElementById("goalRecordsTab").style.display = "none";
         const response = await fetch(`${API_BASE_URL}/daily-goals`);
         const result = await response.json();
         goalRecords = result.data;
         renderGoalRecords(goalRecords);
-
+        document.getElementById("goalRecordsLoader").style.display = "none";
+        document.getElementById("goalRecordsTab").style.display = "block";
     } catch (error) {
-
+        document.getElementById("goalRecordsLoader").style.display = "none";
+        document.getElementById("goalRecordsTab").style.display = "block";
         console.error("Error loading goal records:", error);
 
     }
@@ -2244,9 +2268,7 @@ function renderGoalRecords(records) {
 
 function openGoalTab(tab, button) {
 
-    document
-        .querySelectorAll(".history-tab-btn")
-        .forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".history-tab-btn").forEach(btn => btn.classList.remove("active"));
 
     button.classList.add("active");
 
@@ -2260,8 +2282,8 @@ function openGoalTab(tab, button) {
 
     if (tab === "records") {
         document.getElementById("goalRecordsTab").style.display = "block";
-
         loadGoalRecords();
+
     }
 
     if (tab === "analysis") {
