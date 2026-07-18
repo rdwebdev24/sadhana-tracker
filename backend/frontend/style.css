@@ -3023,3 +3023,66 @@ input[readonly] {
     cursor:pointer;
     font-size:18px;
 }
+
+.goal-record-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+
+
+.goal-record-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.goal-record-header h4{
+    margin:0;
+    font-size:17px;
+}
+
+.goal-record-score{
+    font-weight:700;
+    color:#4CAF50;
+}
+
+.goal-record-body{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    margin-top:0;
+    padding-top:0;
+    border-top:1px solid transparent;
+    transition:
+        max-height .35s ease,
+        opacity .25s ease,
+        margin-top .35s ease,
+        padding-top .35s ease;
+}
+
+.goal-record-body.expanded{
+    max-height:500px;
+    opacity:1;
+    margin-top:15px;
+    padding-top:15px;
+    border-top:1px solid #eee;
+}
+
+.goal-record-body p{
+    margin:10px 0;
+    font-size:15px;
+}
+
+.goal-loader{
+    text-align:center;
+    padding:20px;
+    font-size:16px;
+    color:#666;
+}
