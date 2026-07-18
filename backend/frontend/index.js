@@ -3,6 +3,8 @@ document.getElementById("date").valueAsDate = new Date();
 // const API_BASE_URL = "http://localhost:3000/api";
 const API_BASE_URL = "https://sadhana-tracker-4njd.onrender.com/api";
 let sadhanaData = [];
+let todayGoals = [];
+let editingGoalIndex = -1;
 
 async function loadSadhanaData(forceRefresh = false) {
 
@@ -15,6 +17,34 @@ async function loadSadhanaData(forceRefresh = false) {
   const result = await response.json();
 
   sadhanaData = result.data || [];
+
+}
+
+async function loadTodayGoals() {
+
+    try {
+
+        const response = await fetch(`${API_BASE_URL}/daily-goals`);
+
+        const result = await response.json();
+
+        const today = new Date().toISOString().split("T")[0];
+
+        const todayData = result.data.find(item => item.date === today);
+
+        if (todayData) {
+            todayGoals = todayData.goals;
+        } else {
+            todayGoals = [];
+        }
+
+        renderGoals();
+
+    } catch (error) {
+
+        console.error("Error loading goals:", error);
+
+    }
 
 }
 
@@ -1232,6 +1262,10 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
     initializeReflectionPage();
   }
 
+  if (pageId === "goalsPage") {
+    loadTodayGoals();
+  }
+
   // Sidebar active item
   document
     .querySelectorAll(".sidebar-item")
@@ -1973,6 +2007,170 @@ function toggleDarkMode() {
     "theme",
     isDark ? "dark" : "light"
   );
+}
+
+async function addGoal() {
+
+    const input = document.getElementById("goalInput");
+
+    const title = input.value.trim();
+
+    if (title === "") {
+        return;
+    }
+
+    todayGoals.push({
+        title,
+        completed: false
+    });
+
+    input.value = "";
+
+    renderGoals();
+    await saveTodayGoals();
+
+}
+
+function renderGoals() {
+
+    const goalList = document.getElementById("goalList");
+
+    goalList.innerHTML = "";
+
+    todayGoals.forEach((goal, index) => {
+
+        goalList.innerHTML += `
+
+        <div class="goal-card">
+
+            <input
+                type="checkbox"
+                ${goal.completed ? "checked" : ""}
+                onchange="toggleGoal(${index})">
+
+              ${editingGoalIndex === index?
+              `<input
+                  type="text"
+                  id="editGoalInput"
+                  value="${goal.title}"
+                  class="edit-goal-input">`:`<span>${goal.title}</span>`}
+                  ${editingGoalIndex === index?
+                  `<button onclick="saveEditedGoal(${index})">✔️</button>
+                  <button onclick="cancelEditGoal()">❌</button>`:
+                  `<button onclick="editGoal(${index})">✏️</button>
+                  <button onclick="deleteGoal(${index})">🗑️</button>`}
+                  </div>`;});
+
+    updateGoalScore();
+
+}
+
+async function toggleGoal(index) {
+
+    todayGoals[index].completed = !todayGoals[index].completed;
+    renderGoals();
+    await saveTodayGoals();
+
+
+}
+
+async function deleteGoal(index) {
+
+    todayGoals.splice(index, 1);
+
+    renderGoals();
+
+    await saveTodayGoals();
+
+}
+
+function updateGoalScore() {
+
+    const scoreElement = document.getElementById("goalScore");
+
+    if (todayGoals.length === 0) {
+        scoreElement.textContent = "0%";
+        return;
+    }
+
+    const completedGoals = todayGoals.filter(goal => goal.completed).length;
+
+    const score = Math.round((completedGoals / todayGoals.length) * 100);
+
+    scoreElement.textContent = `${score}%`;
+
+}
+
+async function saveTodayGoals() {
+
+    try {
+
+        const completedGoals = todayGoals.filter(goal => goal.completed).length;
+
+        const score = todayGoals.length === 0
+            ? 0
+            : Math.round((completedGoals / todayGoals.length) * 100);
+
+        const today = new Date().toISOString().split("T")[0];
+
+        await fetch(`${API_BASE_URL}/daily-goals`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                date: today,
+                goals: todayGoals,
+                score: score
+            })
+
+        });
+
+    } catch (error) {
+
+        console.error("Error saving goals:", error);
+
+    }
+
+}
+
+function editGoal(index) {
+
+    editingGoalIndex = index;
+
+    renderGoals();
+
+}
+
+async function saveEditedGoal(index) {
+
+    const input = document.getElementById("editGoalInput");
+
+    const newTitle = input.value.trim();
+
+    if (newTitle === "") {
+        return;
+    }
+
+    todayGoals[index].title = newTitle;
+
+    editingGoalIndex = -1;
+
+    renderGoals();
+
+    await saveTodayGoals();
+
+}
+
+function cancelEditGoal() {
+
+    editingGoalIndex = -1;
+
+    renderGoals();
+
 }
 
 showRecords();

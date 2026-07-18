@@ -2948,3 +2948,78 @@ input[readonly] {
   background: #121212;
   color: #f5f5f5;
 }
+
+.goal-add-card{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.goal-add-card input{
+    flex:1;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.goal-add-card button{
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    background:#4CAF50;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+#goalList{
+    margin-top:20px;
+}
+
+.goal-footer{
+    margin-top:25px;
+    text-align:center;
+}
+
+.goal-footer button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:#4CAF50;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.goal-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    transition:all .25s ease;
+}
+
+
+
+.goal-card input[type="checkbox"]{
+    width:18px;
+    height:18px;
+}
+
+.goal-card span{
+    flex:1;
+    font-size:16px;
+}
+
+.goal-card button{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:18px;
+}

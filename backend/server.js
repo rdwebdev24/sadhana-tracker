@@ -1,14 +1,15 @@
 const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const colors = require("colors");
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db.js");
-require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const sadhanaRoutes = require("./routes/sadhanaRoutes");
 const reflectionRoutes = require("./routes/reflectionRoutes");
 const DailyReflection = require("./model/DailyReflection.js");
+const dailyGoalRoutes = require("./routes/dailyGoalRoutes");
 
 const dns = require('node:dns/promises');
 dns.setServers(["1.1.1.1"]);
@@ -24,7 +25,7 @@ app.use(express.static(path.join(__dirname, "frontend")));
 
 app.use("/api/sadhana", sadhanaRoutes);
 app.use("/api/reflections", reflectionRoutes);
-
+app.use("/api/daily-goals", dailyGoalRoutes);
 
 app.get("/", (req, res) => {
    res.sendFile(path.join(__dirname, "frontend", "index.html"));
