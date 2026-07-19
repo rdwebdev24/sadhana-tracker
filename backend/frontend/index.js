@@ -1287,7 +1287,6 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
 
   if (pageId === "goalsPage") {
     loadTodayGoals();
-    loadGoalRecords();
   }
 
   // Sidebar active item
@@ -2283,7 +2282,6 @@ function openGoalTab(tab, button) {
     if (tab === "records") {
         document.getElementById("goalRecordsTab").style.display = "block";
         loadGoalRecords();
-
     }
 
     if (tab === "analysis") {
