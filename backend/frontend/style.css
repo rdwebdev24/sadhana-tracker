@@ -3086,3 +3086,65 @@ input[readonly] {
     font-size:16px;
     color:#666;
 }
+
+.goalAnalyticsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.goalAnalyticsCard {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.goalAnalyticsCard:hover {
+    transform: translateY(-3px);
+}
+
+.goalAnalyticsCard h4 {
+    margin: 0;
+    font-size: 15px;
+    color: #666;
+    font-weight: 500;
+}
+
+.goalAnalyticsCard h2 {
+    margin-top: 10px;
+    font-size: 30px;
+    color: #2e7d32;
+}
+
+.todayScoreContainer{
+    margin-top:20px;
+}
+
+.todayScoreHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#1f2937;
+}
+
+.todayScoreBar{
+    width:100%;
+    height:12px;
+    background:#e5e7eb;
+    border-radius:50px;
+    overflow:hidden;
+}
+
+#todayScoreFill{
+    height:100%;
+    width:0%;
+    background:#22c55e;
+    border-radius:50px;
+    transition:width .4s ease;
+}

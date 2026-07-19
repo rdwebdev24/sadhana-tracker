@@ -22,9 +22,9 @@ async function loadSadhanaData(forceRefresh = false) {
 
   const today = new Date().toISOString().split("T")[0];
 
-const todayRecord = sadhanaData.find(record => record.date === today);
+  const todayRecord = sadhanaData.find(record => record.date === today);
 
-if (todayRecord) {
+  if (todayRecord) {
 
     document.getElementById("date").value = todayRecord.date || "";
     document.getElementById("location").value = todayRecord.location || "";
@@ -36,38 +36,38 @@ if (todayRecord) {
     document.getElementById("sleepTime").value = todayRecord.sleepTime || "";
     document.getElementById("Seva").value = todayRecord.Seva || "";
 
-}
+  }
 
 }
 
 async function loadTodayGoals() {
 
-    try {
-        document.getElementById("goalLoader").style.display = "block";
-        document.getElementById("goalList").style.display = "none";
-        const response = await fetch(`${API_BASE_URL}/daily-goals`);
+  try {
+    document.getElementById("goalLoader").style.display = "block";
+    document.getElementById("goalList").style.display = "none";
+    const response = await fetch(`${API_BASE_URL}/daily-goals`);
 
-        const result = await response.json();
+    const result = await response.json();
 
-        const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0];
 
-        const todayData = result.data.find(item => item.date === today);
+    const todayData = result.data.find(item => item.date === today);
 
-        if (todayData) {
-            todayGoals = todayData.goals;
-        } else {
-            todayGoals = [];
-        }
-
-        renderGoals();
-        document.getElementById("goalLoader").style.display = "none";
-        document.getElementById("goalList").style.display = "block";
-      } catch (error) {
-        document.getElementById("goalLoader").style.display = "none";
-        document.getElementById("goalList").style.display = "block";
-        console.error("Error loading goals:", error);
-
+    if (todayData) {
+      todayGoals = todayData.goals;
+    } else {
+      todayGoals = [];
     }
+
+    renderGoals();
+    document.getElementById("goalLoader").style.display = "none";
+    document.getElementById("goalList").style.display = "block";
+  } catch (error) {
+    document.getElementById("goalLoader").style.display = "none";
+    document.getElementById("goalList").style.display = "block";
+    console.error("Error loading goals:", error);
+
+  }
 
 }
 
@@ -118,35 +118,35 @@ async function saveSadhana() {
 
   };
 
-try {
+  try {
 
-  const response = await fetch(`${API_BASE_URL}/sadhana`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(entry)
-  });
+    const response = await fetch(`${API_BASE_URL}/sadhana`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(entry)
+    });
 
-  const result = await response.json();
+    const result = await response.json();
 
-  if (!result.success) {
-    throw new Error(result.message);
+    if (!result.success) {
+      throw new Error(result.message);
+    }
+    // 👇 Cache clear
+    sadhanaData = [];
+    // 👇 Fresh data MongoDB se load hoga
+    showRecords();
+
+    showToast("Sadhana saved successfully!");
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast("Failed to save sadhana.");
+
   }
-  // 👇 Cache clear
-  sadhanaData = [];
-   // 👇 Fresh data MongoDB se load hoga
-  showRecords();
-
-  showToast("Sadhana saved successfully!");
-
-} catch (error) {
-
-  console.error(error);
-
-  showToast("Failed to save sadhana.");
-
-}
 
   showRecords();
   showToast("Sadhana saved successfully!");
@@ -195,9 +195,9 @@ async function openHistoryTab(view, clickedButton = null) {
   const monthListDiv = document.getElementById("monthList");
   const headingDiv = document.getElementById("historyViewHeading");
 
-await loadSadhanaData();
+  await loadSadhanaData();
 
-const data = sadhanaData;
+  const data = sadhanaData;
 
   data.sort(
     (a, b) => createLocalDate(b.date) - createLocalDate(a.date)
@@ -228,8 +228,8 @@ const data = sadhanaData;
   }
 
   if (view === "weekly") {
-      const weeklyRecords = getCurrentWeekRecords(data);
-   
+    const weeklyRecords = getCurrentWeekRecords(data);
+
 
     headingDiv.innerHTML = `
       <h3>This week</h3>
@@ -595,11 +595,11 @@ function toggleHistoryCard(cardId) {
 
 async function sendRecordToWhatsApp(recordDate) {
   const response = await fetch(`${API_BASE_URL}/sadhana`);
-const result = await response.json();
+  const result = await response.json();
 
-const item = result.data.find(
-  record => record.date === recordDate
-);
+  const item = result.data.find(
+    record => record.date === recordDate
+  );
   if (!item) {
     alert("Record not found.");
     return;
@@ -1269,10 +1269,10 @@ function openFeaturePage(pageId, pageTitle, clickedItem) {
   }
 
   if (pageId === "dashboardPage") {
-  document.getElementById("bottomTabs").style.display = "flex";
-} else {
-  document.getElementById("bottomTabs").style.display = "none";
-}
+    document.getElementById("bottomTabs").style.display = "flex";
+  } else {
+    document.getElementById("bottomTabs").style.display = "none";
+  }
   // document.getElementById("bottomTabs").style.display = "none";
 
   if (pageId === "achievementsPage") {
@@ -1351,7 +1351,7 @@ function returnToDailyPage(clickedItem) {
       item.classList.remove("active");
     });
 
-closeSidebar();
+  closeSidebar();
 
   window.scrollTo({
     top: 0,
@@ -1706,34 +1706,34 @@ async function saveDailyReflection() {
     updatedAt: new Date().toISOString()
   };
 
- try {
-  const response = await fetch(
-    `${API_BASE_URL}/reflections`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(reflection)
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/reflections`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reflection)
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.message);
     }
-  );
 
-  const result = await response.json();
+    showReflectionRecords();
 
-  if (!result.success) {
-    throw new Error(result.message);
+    showToast("Daily reflection saved successfully!");
+
+    clearReflectionForm()
+
+  } catch (err) {
+    console.error(err);
+    showToast("Failed to save reflection.");
   }
-
-  showReflectionRecords();
-
-  showToast("Daily reflection saved successfully!");
-
-  clearReflectionForm()
-
-} catch (err) {
-  console.error(err);
-  showToast("Failed to save reflection.");
-}
 }
 
 async function loadReflectionForSelectedDate() {
@@ -1744,35 +1744,35 @@ async function loadReflectionForSelectedDate() {
 
   const selectedDate = dateInput.value;
 
-try {
+  try {
 
-  const response = await fetch(
-    `${API_BASE_URL}/reflections`
-  );
+    const response = await fetch(
+      `${API_BASE_URL}/reflections`
+    );
 
-  const result = await response.json();
+    const result = await response.json();
 
-  const reflections = result.data || [];
+    const reflections = result.data || [];
 
-  const reflection = reflections.find(
-    item => item.date === selectedDate
-  );
+    const reflection = reflections.find(
+      item => item.date === selectedDate
+    );
 
-  document.getElementById("reflectionInspired").value =
-    reflection?.inspired || "";
+    document.getElementById("reflectionInspired").value =
+      reflection?.inspired || "";
 
-  document.getElementById("reflectionLearned").value =
-    reflection?.learned || "";
+    document.getElementById("reflectionLearned").value =
+      reflection?.learned || "";
 
-  document.getElementById("reflectionImprove").value =
-    reflection?.improve || "";
+    document.getElementById("reflectionImprove").value =
+      reflection?.improve || "";
 
-  document.getElementById("reflectionNotes").value =
-    reflection?.notes || "";
+    document.getElementById("reflectionNotes").value =
+      reflection?.notes || "";
 
-} catch (err) {
-  console.error(err);
-}
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function showReflectionRecords() {
@@ -1784,13 +1784,13 @@ async function showReflectionRecords() {
 
   if (!recordsContainer || !countElement) return;
 
- const response = await fetch(
-  `${API_BASE_URL}/reflections`
-);
+  const response = await fetch(
+    `${API_BASE_URL}/reflections`
+  );
 
-const result = await response.json();
+  const result = await response.json();
 
-const reflections = result.data || [];
+  const reflections = result.data || [];
 
   reflections.sort(
     (a, b) =>
@@ -2032,35 +2032,35 @@ function toggleDarkMode() {
 
 async function addGoal() {
 
-    const input = document.getElementById("goalInput");
+  const input = document.getElementById("goalInput");
 
-    const title = input.value.trim();
+  const title = input.value.trim();
 
-    if (title === "") {
-        return;
-    }
+  if (title === "") {
+    return;
+  }
 
-    todayGoals.push({
-        title,
-        completed: false
-    });
+  todayGoals.push({
+    title,
+    completed: false
+  });
 
-    input.value = "";
+  input.value = "";
 
-    renderGoals();
-    await saveTodayGoals();
+  renderGoals();
+  await saveTodayGoals();
 
 }
 
 function renderGoals() {
 
-    const goalList = document.getElementById("goalList");
+  const goalList = document.getElementById("goalList");
 
-    goalList.innerHTML = "";
+  goalList.innerHTML = "";
 
-    todayGoals.forEach((goal, index) => {
+  todayGoals.forEach((goal, index) => {
 
-        goalList.innerHTML += `
+    goalList.innerHTML += `
 
         <div class="goal-card">
 
@@ -2069,49 +2069,48 @@ function renderGoals() {
                 ${goal.completed ? "checked" : ""}
                 onchange="toggleGoal(${index})">
 
-              ${editingGoalIndex === index?
-              `<input
+              ${editingGoalIndex === index ?
+        `<input
                   type="text"
                   id="editGoalInput"
                   value="${goal.title}"
-                  class="edit-goal-input">`:`<span>${goal.title}</span>`}
-                  ${editingGoalIndex === index?
-                  `<button onclick="saveEditedGoal(${index})">✔️</button>
+                  class="edit-goal-input">`: `<span>${goal.title}</span>`}
+                  ${editingGoalIndex === index ?
+        `<button onclick="saveEditedGoal(${index})">✔️</button>
                   <button onclick="cancelEditGoal()">❌</button>`:
-                  `<button onclick="editGoal(${index})">✏️</button>
+        `<button onclick="editGoal(${index})">✏️</button>
                   <button onclick="deleteGoal(${index})">🗑️</button>`}
-                  </div>`;});
+                  </div>`;
+  });
 
-    updateGoalScore();
+  updateGoalScore();
 
 }
 
 async function toggleGoal(index) {
 
-    todayGoals[index].completed = !todayGoals[index].completed;    
-    renderGoals();
-    await saveTodayGoals();
-    console.log("After save", goalRecords);
-    
+  todayGoals[index].completed = !todayGoals[index].completed;
+  renderGoals();
+  await saveTodayGoals();
+
 }
 
 async function deleteGoal(index) {
 
-    todayGoals.splice(index, 1);
+  todayGoals.splice(index, 1);
 
-    renderGoals();
+  renderGoals();
 
-    await saveTodayGoals();
+  await saveTodayGoals();
 
 
 }
 
 function updateGoalScore() {
 
-    const scoreElement = document.getElementById("goalScore");
-
     if (todayGoals.length === 0) {
-        scoreElement.textContent = "0%";
+        document.getElementById("todayScoreText").textContent = "0%";
+        document.getElementById("todayScoreFill").style.width = "0%";
         return;
     }
 
@@ -2119,83 +2118,84 @@ function updateGoalScore() {
 
     const score = Math.round((completedGoals / todayGoals.length) * 100);
 
-    scoreElement.textContent = `${score}%`;
+    document.getElementById("todayScoreText").textContent = score + "%";
+    document.getElementById("todayScoreFill").style.width = score + "%";
 
 }
 
 async function saveTodayGoals() {
 
-    try {
+  try {
 
-        const completedGoals = todayGoals.filter(goal => goal.completed).length;
+    const completedGoals = todayGoals.filter(goal => goal.completed).length;
 
-        const score = todayGoals.length === 0
-            ? 0
-            : Math.round((completedGoals / todayGoals.length) * 100);
+    const score = todayGoals.length === 0
+      ? 0
+      : Math.round((completedGoals / todayGoals.length) * 100);
 
-        const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0];
 
-       const response = await fetch(`${API_BASE_URL}/daily-goals`, {
+    const response = await fetch(`${API_BASE_URL}/daily-goals`, {
 
-            method: "POST",
+      method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-            body: JSON.stringify({
-                date: today,
-                goals: todayGoals,
-                score: score
-            })
+      body: JSON.stringify({
+        date: today,
+        goals: todayGoals,
+        score: score
+      })
 
-        });
-        const result = await response.json();
-        const savedRecord = result.data;
-        const index = goalRecords.findIndex(record => record.date === savedRecord.date);
-        if (index !== -1) {goalRecords[index] = savedRecord;} 
-        else {
-          goalRecords.push(savedRecord);
-        }
-        } catch (error) {
-        console.error("Error saving goals:", error);
+    });
+    const result = await response.json();
+    const savedRecord = result.data;
+    const index = goalRecords.findIndex(record => record.date === savedRecord.date);
+    if (index !== -1) { goalRecords[index] = savedRecord; }
+    else {
+      goalRecords.push(savedRecord);
     }
+  } catch (error) {
+    console.error("Error saving goals:", error);
+  }
 
 }
 
 function editGoal(index) {
 
-    editingGoalIndex = index;
+  editingGoalIndex = index;
 
-    renderGoals();
+  renderGoals();
 
 }
 
 async function saveEditedGoal(index) {
 
-    const input = document.getElementById("editGoalInput");
+  const input = document.getElementById("editGoalInput");
 
-    const newTitle = input.value.trim();
+  const newTitle = input.value.trim();
 
-    if (newTitle === "") {
-        return;
-    }
+  if (newTitle === "") {
+    return;
+  }
 
-    todayGoals[index].title = newTitle;
+  todayGoals[index].title = newTitle;
 
-    editingGoalIndex = -1;
+  editingGoalIndex = -1;
 
-    renderGoals();
+  renderGoals();
 
-    await saveTodayGoals();
+  await saveTodayGoals();
 
 }
 
 function cancelEditGoal() {
 
-    editingGoalIndex = -1;
+  editingGoalIndex = -1;
 
-    renderGoals();
+  renderGoals();
 
 }
 
@@ -2204,40 +2204,40 @@ async function loadGoalRecords() {
   if (goalRecords.length > 0) {
     renderGoalRecords(goalRecords);
     return;
-}
+  }
 
-    try {
-        document.getElementById("goalRecordsLoader").style.display = "block";
-        document.getElementById("goalRecordsTab").style.display = "none";
-        const response = await fetch(`${API_BASE_URL}/daily-goals`);
-        const result = await response.json();
-        goalRecords = result.data || [];
-        renderGoalRecords(goalRecords);
-        document.getElementById("goalRecordsLoader").style.display = "none";
-        document.getElementById("goalRecordsTab").style.display = "block";
-    } catch (error) {
-        document.getElementById("goalRecordsLoader").style.display = "none";
-        document.getElementById("goalRecordsTab").style.display = "block";
-        console.error("Error loading goal records:", error);
+  try {
+    document.getElementById("goalRecordsLoader").style.display = "block";
+    document.getElementById("goalRecordsTab").style.display = "none";
+    const response = await fetch(`${API_BASE_URL}/daily-goals`);
+    const result = await response.json();
+    goalRecords = result.data || [];
+    renderGoalRecords(goalRecords);
+    document.getElementById("goalRecordsLoader").style.display = "none";
+    document.getElementById("goalRecordsTab").style.display = "block";
+  } catch (error) {
+    document.getElementById("goalRecordsLoader").style.display = "none";
+    document.getElementById("goalRecordsTab").style.display = "block";
+    console.error("Error loading goal records:", error);
 
-    }
+  }
 
 }
 
 function renderGoalRecords(records) {
 
-    const recordsTab =
-        document.getElementById("goalRecordsTab");
+  const recordsTab =
+    document.getElementById("goalRecordsTab");
 
-    recordsTab.innerHTML = "";
+  recordsTab.innerHTML = "";
 
-    records.sort((a, b) =>
-        new Date(b.date) - new Date(a.date)
-    );
-    records.forEach(record => { 
-      
-      const isExpanded = expandedGoalRecord === record.date;
-       recordsTab.innerHTML += `
+  records.sort((a, b) =>
+    new Date(b.date) - new Date(a.date)
+  );
+  records.forEach(record => {
+
+    const isExpanded = expandedGoalRecord === record.date;
+    recordsTab.innerHTML += `
 
 <div
     class="goal-record-card"
@@ -2247,7 +2247,7 @@ function renderGoalRecords(records) {
 
     <div class="goal-record-header">
 
-        <h4>${record.date}</h4>
+        <h4>🗓️ ${record.date}</h4>
 
         <div class="goal-record-score">
             ${record.score}%
@@ -2270,61 +2270,114 @@ function renderGoalRecords(records) {
 
 `;
 
-    });
+  });
 
 }
 
-function openGoalTab(tab, button) {
+async function openGoalTab(tab, button) {
 
-    document.querySelectorAll(".history-tab-btn").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".history-tab-btn").forEach(btn => btn.classList.remove("active"));
 
-    button.classList.add("active");
+  button.classList.add("active");
 
-    document.getElementById("todayGoalsContent").style.display = "none";
-    document.getElementById("goalRecordsTab").style.display = "none";
-    document.getElementById("goalAnalysisTab").style.display = "none";
+  document.getElementById("todayGoalsContent").style.display = "none";
+  document.getElementById("goalRecordsTab").style.display = "none";
+  document.getElementById("goalAnalysisTab").style.display = "none";
 
-    if (tab === "today") {
-        document.getElementById("todayGoalsContent").style.display = "block";
+  if (tab === "today") {
+    document.getElementById("todayGoalsContent").style.display = "block";
+  }
+
+  if (tab === "records") {
+    document.getElementById("goalRecordsTab").style.display = "block";
+    loadGoalRecords();
+  }
+
+  if (tab === "analysis") {
+    document.getElementById("goalAnalysisTab").style.display = "block";
+    if (goalRecords.length == 0) {
+      const response = await fetch(`${API_BASE_URL}/daily-goals`);
+      const result = await response.json();
+      goalRecords = result.data || [];
+      renderGoalAnalytics();
+
+    } else {
+      renderGoalAnalytics();
+
     }
 
-    if (tab === "records") {
-        document.getElementById("goalRecordsTab").style.display = "block";
-        loadGoalRecords();
-    }
 
-    if (tab === "analysis") {
-        document.getElementById("goalAnalysisTab").style.display = "block";
-    }
+  }
 
 }
 
 function toggleGoalRecord(card) {
 
-    const date = card.dataset.date;
+  const date = card.dataset.date;
 
-    const body = card.querySelector(".goal-record-body");
+  const body = card.querySelector(".goal-record-body");
 
-    if (expandedGoalRecord === date) {
+  if (expandedGoalRecord === date) {
 
-        expandedGoalRecord = null;
+    expandedGoalRecord = null;
 
-        body.classList.remove("expanded");
+    body.classList.remove("expanded");
 
-    } else {
+  } else {
 
-        document
-            .querySelectorAll(".goal-record-body.expanded")
-            .forEach(item => item.classList.remove("expanded"));
+    document
+      .querySelectorAll(".goal-record-body.expanded")
+      .forEach(item => item.classList.remove("expanded"));
 
-        expandedGoalRecord = date;
+    expandedGoalRecord = date;
 
-        body.classList.add("expanded");
+    body.classList.add("expanded");
 
-    }
+  }
 
 }
 
+function renderGoalAnalytics() {
+  if (goalRecords.length === 0) {
+    return;
+  }
+  let totalCreated = 0;
+  let totalCompleted = 0;
+  let totalMissed = 0;
+  let totalScore = 0;
+
+  goalRecords.forEach(record => {
+
+    totalScore += record.score;
+
+    if (!record.goals) return;
+
+    totalCreated += record.goals.length;
+
+    record.goals.forEach(goal => {
+
+      if (goal.completed) {
+        totalCompleted++;
+      } else {
+        totalMissed++;
+      }
+
+    });
+
+  });
+  const overallCompletion = Math.round(totalScore / goalRecords.length);
+  document.getElementById("overallCompletion").textContent =
+    overallCompletion + "%";
+
+  document.getElementById("totalGoalsCreated").textContent =
+    totalCreated;
+
+  document.getElementById("totalGoalsCompleted").textContent =
+    totalCompleted;
+
+  document.getElementById("totalGoalsMissed").textContent =
+    totalMissed;
+}
 
 showRecords();
 getLocation();

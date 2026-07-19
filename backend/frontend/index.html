@@ -20,93 +20,72 @@
 
 <body>
 
-<header class="app-header">
-  <div class="header-content">
-    <button type="button" class="menu-button" onclick="openSidebar()" aria-label="Open menu">
-      ☰
-    </button>
-    <div class="logo">🌿</div>
+  <header class="app-header">
+    <div class="header-content">
+      <button type="button" class="menu-button" onclick="openSidebar()" aria-label="Open menu">
+        ☰
+      </button>
+      <div class="logo">🌿</div>
 
-    <div>
-      <h1>Sadhana Tracker</h1>
-      <p>Track your daily spiritual practices</p>
+      <div>
+        <h1>Sadhana Tracker</h1>
+        <p>Track your daily spiritual practices</p>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- Sidebar Overlay -->
-<div
-id="sidebarOverlay"
-class="sidebar-overlay"
-onclick="closeSidebar()"
-></div>
+  <!-- Sidebar Overlay -->
+  <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
 
-<!-- Sidebar -->
-<aside id="sidebar" class="sidebar">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
 
-<div class="sidebar-header">
+    <div class="sidebar-header">
 
-  <div class="sidebar-brand">
-    <div class="sidebar-logo">🌿</div>
+      <div class="sidebar-brand">
+        <div class="sidebar-logo">🌿</div>
 
-    <div>
-      <h2>Sadhana Tracker</h2>
-      <p>Hare Krishna 🙏</p>
+        <div>
+          <h2>Sadhana Tracker</h2>
+          <p>Hare Krishna 🙏</p>
+        </div>
+      </div>
+
+      <button type="button" class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">
+        ×
+      </button>
+
     </div>
-  </div>
 
-  <button
-    type="button"
-    class="sidebar-close"
-    onclick="closeSidebar()"
-    aria-label="Close menu"
-  >
-    ×
-  </button>
+    <div class="sidebar-profile">
+      <div class="profile-icon">🙇</div>
 
-</div>
+      <div>
+        <strong>Daily Sadhana</strong>
+        <span>Stay steady and sincere</span>
+      </div>
+    </div>
 
-<div class="sidebar-profile">
-  <div class="profile-icon">🙇</div>
+    <nav class="sidebar-menu">
 
-  <div>
-    <strong>Daily Sadhana</strong>
-    <span>Stay steady and sincere</span>
-  </div>
-</div>
+      <button type="button" class="sidebar-item" onclick="returnToDailyPage(this)">
+        <span class="sidebar-item-icon">🏠</span>
+        <span>Dashboard</span>
+      </button>
 
-<nav class="sidebar-menu">
-
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="returnToDailyPage(this)"
-  >
-    <span class="sidebar-item-icon">🏠</span>
-    <span>Dashboard</span>
-  </button>
-
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('calendarPage', 'Calendar', this)"
-  >
-    <span class="sidebar-item-icon">📅</span>
-    <span>Calendar</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('calendarPage', 'Calendar', this)">
+        <span class="sidebar-item-icon">📅</span>
+        <span>Calendar</span>
+      </button>
 
 
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('achievementsPage', 'Achievements', this)"
-  >
-    <span class="sidebar-item-icon">🏆</span>
-    <span>Achievements</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('achievementsPage', 'Achievements', this)">
+        <span class="sidebar-item-icon">🏆</span>
+        <span>Achievements</span>
+      </button>
 
-  <!-- <button
+      <!-- <button
     type="button"
     class="sidebar-item"
     onclick="openFeaturePage('heatmapPage', 'Heat Map', this)"
@@ -115,16 +94,12 @@ onclick="closeSidebar()"
     <span>Heat Map</span>
   </button> -->
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('goalsPage', 'Daily Goals', this)"
-  >
-    <span class="sidebar-item-icon">🎯</span>
-    <span>Daily Goals</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('goalsPage', 'Daily Goals', this)">
+        <span class="sidebar-item-icon">🎯</span>
+        <span>Daily Goals</span>
+      </button>
 
-  <!-- <button
+      <!-- <button
     type="button"
     class="sidebar-item"
     onclick="openFeaturePage('readingTrackerPage', 'Reading Tracker', this)"
@@ -133,25 +108,17 @@ onclick="closeSidebar()"
     <span>Reading Tracker</span>
   </button> -->
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('reflectionPage', 'Daily Reflection', this)"
-  >
-    <span class="sidebar-item-icon">💭</span>
-    <span>Daily Reflection</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('reflectionPage', 'Daily Reflection', this)">
+        <span class="sidebar-item-icon">💭</span>
+        <span>Daily Reflection</span>
+      </button>
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('exportPage', 'Export Data', this)"
-  >
-    <span class="sidebar-item-icon">📤</span>
-    <span>Export Data</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('exportPage', 'Export Data', this)">
+        <span class="sidebar-item-icon">📤</span>
+        <span>Export Data</span>
+      </button>
 
-  <!-- <button
+      <!-- <button
     type="button"
     class="sidebar-item"
     onclick="openFeaturePage('backupPage', 'Backup & Restore', this)"
@@ -160,677 +127,636 @@ onclick="closeSidebar()"
     <span>Backup & Restore</span>
   </button> -->
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('settingsPage', 'Settings', this)"
-  >
-    <span class="sidebar-item-icon">⚙️</span>
-    <span>Settings</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('settingsPage', 'Settings', this)">
+        <span class="sidebar-item-icon">⚙️</span>
+        <span>Settings</span>
+      </button>
 
-  <button
-    type="button"
-    class="sidebar-item"
-    onclick="openFeaturePage('aboutPage', 'About', this)"
-  >
-    <span class="sidebar-item-icon">ℹ️</span>
-    <span>About</span>
-  </button>
+      <button type="button" class="sidebar-item" onclick="openFeaturePage('aboutPage', 'About', this)">
+        <span class="sidebar-item-icon">ℹ️</span>
+        <span>About</span>
+      </button>
 
-</nav>
+    </nav>
 
-<div class="sidebar-footer">
-  <span>Version 1.0</span>
-  <strong>All glories to Śrīla Prabhupāda 🙏</strong>
-</div>
+    <div class="sidebar-footer">
+      <span>Version 1.0</span>
+      <strong>All glories to Śrīla Prabhupāda 🙏</strong>
+    </div>
 
-</aside>
-  
+  </aside>
+
   <main id="container">
 
-  <!-- Daily Tab -->
-  <section id="dailyTab" class="tab-page active">
+    <!-- Daily Tab -->
+    <section id="dailyTab" class="tab-page active">
 
-    <div class="today-verse-card">
+      <div class="today-verse-card">
 
-      <div class="today-verse-info">
+        <div class="today-verse-info">
 
-        <div class="today-verse-icon">
-          🪷
+          <div class="today-verse-icon">
+            🪷
+          </div>
+
+          <div>
+            <span class="today-verse-label">
+              TODAY'S GITA ŚLOKA
+            </span>
+
+            <h3 id="todayVerseReference">
+              BG 1.1
+            </h3>
+          </div>
+
         </div>
 
-        <div>
-          <span class="today-verse-label">
-            TODAY'S GITA ŚLOKA
-          </span>
-
-          <h3 id="todayVerseReference">
-            BG 1.1
-          </h3>
-        </div>
+        <a id="todayVedabaseLink" class="today-vedabase-link" href="https://vedabase.io/en/library/bg/1/1/"
+          target="_blank" rel="noopener noreferrer">
+          View on Vedabase
+          <span>↗</span>
+        </a>
 
       </div>
 
-      <a id="todayVedabaseLink" class="today-vedabase-link" href="https://vedabase.io/en/library/bg/1/1/"
-        target="_blank" rel="noopener noreferrer">
-        View on Vedabase
-        <span>↗</span>
-      </a>
+      <div class="form-card">
 
-    </div>
+        <div class="card-heading">
+          <span class="heading-icon">📝</span>
 
-    <div class="form-card">
-
-      <div class="card-heading">
-        <span class="heading-icon">📝</span>
-
-        <div>
-          <h2>Daily Sadhana</h2>
-          <p>Enter today's spiritual activities</p>
-        </div>
-      </div>
-
-      <div class="form-grid">
-
-        <div class="input-group">
-          <label for="date">
-            <span>📅</span>
-            Date
-          </label>
-
-          <input type="date" id="date">
-        </div>
-
-        <div class="input-group">
-          <label for="location">
-            <span>📍</span>
-            Location
-          </label>
-
-          <input type="text" id="location" placeholder="Detecting location..." readonly>
-        </div>
-
-        <div class="input-group">
-          <label for="rounds">
-            <span>📿</span>
-            Chanting Rounds
-          </label>
-
-          <input type="number" id="rounds" placeholder="Enter number of rounds" min="0">
-        </div>
-
-        <div class="input-group">
-          <label for="Rounds_finish_before">
-            <span>⏰</span>
-            Rounds Finished At
-          </label>
-
-          <input type="time" id="Rounds_finish_before">
-        </div>
-
-        <div class="input-group">
-          <label for="reading">
-            <span>📖</span>
-            Reading
-          </label>
-
-          <div class="input-with-unit">
-            <input type="number" id="reading" placeholder="Reading duration" min="0">
-
-            <span>min</span>
+          <div>
+            <h2>Daily Sadhana</h2>
+            <p>Enter today's spiritual activities</p>
           </div>
         </div>
 
-        <div class="input-group">
-          <label for="hearing">
-            <span>🎧</span>
-            Hearing
-          </label>
+        <div class="form-grid">
 
-          <div class="input-with-unit">
-            <input type="number" id="hearing" placeholder="Hearing duration" min="0">
+          <div class="input-group">
+            <label for="date">
+              <span>📅</span>
+              Date
+            </label>
 
-            <span>min</span>
+            <input type="date" id="date">
+          </div>
+
+          <div class="input-group">
+            <label for="location">
+              <span>📍</span>
+              Location
+            </label>
+
+            <input type="text" id="location" placeholder="Detecting location..." readonly>
+          </div>
+
+          <div class="input-group">
+            <label for="rounds">
+              <span>📿</span>
+              Chanting Rounds
+            </label>
+
+            <input type="number" id="rounds" placeholder="Enter number of rounds" min="0">
+          </div>
+
+          <div class="input-group">
+            <label for="Rounds_finish_before">
+              <span>⏰</span>
+              Rounds Finished At
+            </label>
+
+            <input type="time" id="Rounds_finish_before">
+          </div>
+
+          <div class="input-group">
+            <label for="reading">
+              <span>📖</span>
+              Reading
+            </label>
+
+            <div class="input-with-unit">
+              <input type="number" id="reading" placeholder="Reading duration" min="0">
+
+              <span>min</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="hearing">
+              <span>🎧</span>
+              Hearing
+            </label>
+
+            <div class="input-with-unit">
+              <input type="number" id="hearing" placeholder="Hearing duration" min="0">
+
+              <span>min</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="wakeTime">
+              <span>🌅</span>
+              Wake-up Time
+            </label>
+
+            <input type="time" id="wakeTime">
+          </div>
+
+          <div class="input-group">
+            <label for="sleepTime">
+              <span>🌙</span>
+              Sleep Time
+            </label>
+
+            <input type="time" id="sleepTime">
+          </div>
+
+          <div class="input-group full-width">
+            <label for="Seva">
+              <span>🛕</span>
+              Seva
+            </label>
+
+            <textarea id="Seva" rows="3" placeholder="Mention the seva performed today"></textarea>
+          </div>
+
+        </div>
+
+        <button type="button" class="save-button" onclick="saveSadhana()">
+          <span>✓</span>
+          Save Sadhana
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- History Tab -->
+    <section id="historyTab" class="tab-page">
+
+      <div class="page-heading">
+        <div>
+          <h2>Previous Records</h2>
+          <p>Review your daily sadhana entries</p>
+        </div>
+
+        <span class="page-icon">📜</span>
+      </div>
+
+      <!-- History Filter Tabs -->
+      <div class="history-tabs">
+
+        <button type="button" class="history-tab-btn active" onclick="openHistoryTab('all', this)">
+          📋 All Records
+        </button>
+
+        <button type="button" class="history-tab-btn" onclick="openHistoryTab('weekly', this)">
+          📅 This week
+        </button>
+
+        <button type="button" class="history-tab-btn" onclick="openHistoryTab('monthly', this)">
+          🗓️ Monthly
+        </button>
+
+      </div>
+
+      <!-- Selected Filter Heading -->
+      <div id="historyViewHeading" class="history-view-heading"></div>
+
+      <!-- Month List -->
+      <div id="monthList" class="month-list"></div>
+
+      <!-- Records -->
+      <div id="records"></div>
+
+    </section>
+
+
+    <!-- Analytics Tab -->
+    <section id="analyticsTab" class="tab-page">
+
+      <div class="page-heading">
+        <div>
+          <h2>Sadhana Analytics</h2>
+          <p>Overview of your spiritual consistency</p>
+        </div>
+
+        <span class="page-icon">📊</span>
+      </div>
+
+      <div id="analytics"></div>
+
+      <div class="chart-card">
+        <div class="chart-heading">
+          <div>
+            <h3>Sleep and Wake-up Pattern</h3>
+            <p>Your recorded daily routine</p>
+          </div>
+
+          <span>🌅</span>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas id="sleepWakeChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Dashboard Page -->
+    <section id="dashboardPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Dashboard</h2>
+          <p>Your complete sadhana overview</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>🏠</div>
+        <h3>Dashboard</h3>
+        <p>This feature will be added soon.</p>
+      </div>
+
+    </section>
+
+
+    <!-- Calendar Page -->
+    <section id="calendarPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Calendar</h2>
+          <p>View your daily consistency</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>📅</div>
+        <h3>Calendar View</h3>
+        <p>This feature will be added soon.</p>
+      </div>
+
+    </section>
+
+
+    <!-- Streak Page -->
+    <section id="streakPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Streak</h2>
+          <p>Track your current and longest streak</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>🔥</div>
+        <h3>Streak Tracker</h3>
+        <p>This feature will be added soon.</p>
+      </div>
+
+    </section>
+
+
+    <!-- Achievements Page -->
+    <section id="achievementsPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Achievements</h2>
+          <p>Your personal records and milestones</p>
+        </div>
+      </div>
+
+      <div id="achievementsContent"></div>
+
+    </section>
+
+    <!-- Heat Map Page -->
+    <section id="heatmapPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Heat Map</h2>
+          <p>Yearly consistency overview</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>🌡️</div>
+        <h3>Sadhana Heat Map</h3>
+        <p>This feature will be added soon.</p>
+      </div>
+
+    </section>
+
+
+    <!-- Goals Page -->
+    <section id="goalsPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Daily Goals</h2>
+          <p>Set your personal daily targets</p>
+        </div>
+      </div>
+
+      <div class="history-tabs">
+        <button class="history-tab-btn active" onclick="openGoalTab('today',this)">
+          Today's Goals
+        </button>
+
+        <button class="history-tab-btn" onclick="openGoalTab('records',this)">
+          Records
+        </button>
+
+        <button class="history-tab-btn" onclick="openGoalTab('analysis',this)">
+          Analysis
+        </button>
+      </div>
+
+      <div id="todayGoalsContent">
+
+        <div class="goal-add-card">
+
+          <input type="text" id="goalInput" placeholder="Enter today's goal...">
+
+          <button onclick="addGoal()">
+            <i class="fa-solid fa-plus"></i> Add Goal
+          </button>
+
+        </div>
+        <div id="goalLoader" class="goal-loader" style="display:none;">
+          Loading goals...
+        </div>
+        <div id="goalList">
+        </div>
+
+        <div class="goal-footer">
+          <div class="todayScoreContainer">
+            <div class="todayScoreHeader">
+              <span>Today's Score</span>
+              <span id="todayScoreText">50%</span>
+            </div>
+
+            <div class="todayScoreBar">
+              <div id="todayScoreFill"></div>
+            </div>
           </div>
         </div>
 
-        <div class="input-group">
-          <label for="wakeTime">
-            <span>🌅</span>
-            Wake-up Time
-          </label>
+      </div>
 
-          <input type="time" id="wakeTime">
+      <div id="goalRecordsLoader" class="goal-loader" style="display:none;">
+        Loading records...
+      </div>
+      <div id="goalRecordsTab" style="display:none"></div>
+
+      <div id="goalAnalysisTab" style="display:none">
+        <div class="goalAnalyticsContainer">
+
+          <div class="goalAnalyticsCard">
+            <h4>Overall Completion</h4>
+            <h2 id="overallCompletion">0%</h2>
+          </div>
+
+          <div class="goalAnalyticsCard">
+            <h4>Current Streak</h4>
+            <h2 id="currentGoalStreak">0 Days</h2>
+          </div>
+
+          <div class="goalAnalyticsCard">
+            <h4>Best Streak</h4>
+            <h2 id="bestGoalStreak">0 Days</h2>
+          </div>
+          <div class="goalAnalyticsCard">
+            <h4>Total Goals Created</h4>
+            <h2 id="totalGoalsCreated">0</h2>
+          </div>
+          <div class="goalAnalyticsCard">
+            <h4>Total Goals Completed</h4>
+            <h2 id="totalGoalsCompleted">0</h2>
+          </div>
+
+          <div class="goalAnalyticsCard">
+            <h4>Total Goals Missed</h4>
+            <h2 id="totalGoalsMissed">0</h2>
+          </div>
+
         </div>
-
-        <div class="input-group">
-          <label for="sleepTime">
-            <span>🌙</span>
-            Sleep Time
-          </label>
-
-          <input type="time" id="sleepTime">
-        </div>
-
-        <div class="input-group full-width">
-          <label for="Seva">
-            <span>🛕</span>
-            Seva
-          </label>
-
-          <textarea id="Seva" rows="3" placeholder="Mention the seva performed today"></textarea>
-        </div>
-
       </div>
 
-      <button type="button" class="save-button" onclick="saveSadhana()">
-        <span>✓</span>
-        Save Sadhana
-      </button>
+    </section>
 
-    </div>
 
-  </section>
+    <!-- Reading Tracker Page -->
+    <section id="readingTrackerPage" class="feature-page">
 
-
-  <!-- History Tab -->
-  <section id="historyTab" class="tab-page">
-
-    <div class="page-heading">
-      <div>
-        <h2>Previous Records</h2>
-        <p>Review your daily sadhana entries</p>
-      </div>
-
-      <span class="page-icon">📜</span>
-    </div>
-
-    <!-- History Filter Tabs -->
-    <div class="history-tabs">
-
-      <button type="button" class="history-tab-btn active" onclick="openHistoryTab('all', this)">
-        📋 All Records
-      </button>
-
-      <button type="button" class="history-tab-btn" onclick="openHistoryTab('weekly', this)">
-        📅 This week
-      </button>
-
-      <button type="button" class="history-tab-btn" onclick="openHistoryTab('monthly', this)">
-        🗓️ Monthly
-      </button>
-
-    </div>
-
-    <!-- Selected Filter Heading -->
-    <div id="historyViewHeading" class="history-view-heading"></div>
-
-    <!-- Month List -->
-    <div id="monthList" class="month-list"></div>
-
-    <!-- Records -->
-    <div id="records"></div>
-
-  </section>
-
-
-  <!-- Analytics Tab -->
-  <section id="analyticsTab" class="tab-page">
-
-    <div class="page-heading">
-      <div>
-        <h2>Sadhana Analytics</h2>
-        <p>Overview of your spiritual consistency</p>
-      </div>
-
-      <span class="page-icon">📊</span>
-    </div>
-
-    <div id="analytics"></div>
-
-    <div class="chart-card">
-      <div class="chart-heading">
-        <div>
-          <h3>Sleep and Wake-up Pattern</h3>
-          <p>Your recorded daily routine</p>
-        </div>
-
-        <span>🌅</span>
-      </div>
-
-      <div class="chart-wrapper">
-        <canvas id="sleepWakeChart"></canvas>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- Dashboard Page -->
-  <section id="dashboardPage" class="feature-page">
-
-  <div class="feature-page-header">
-  <button
-    type="button"
-    class="feature-back-button"
-    onclick="returnToDailyPage()"
-  >
-    <i class="fa-solid fa-arrow-left"></i>
-  </button>
-
-  <div>
-    <h2>Dashboard</h2>
-    <p>Your complete sadhana overview</p>
-  </div>
-  </div>
-
-  <div class="coming-soon-card">
-  <div>🏠</div>
-  <h3>Dashboard</h3>
-  <p>This feature will be added soon.</p>
-  </div>
-
-  </section>
-
-
-  <!-- Calendar Page -->
-  <section id="calendarPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Calendar</h2>
-        <p>View your daily consistency</p>
-      </div>
-    </div>
-
-    <div class="coming-soon-card">
-      <div>📅</div>
-      <h3>Calendar View</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
-
-
-  <!-- Streak Page -->
-  <section id="streakPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Streak</h2>
-        <p>Track your current and longest streak</p>
-      </div>
-    </div>
-
-    <div class="coming-soon-card">
-      <div>🔥</div>
-      <h3>Streak Tracker</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
-
-
-  <!-- Achievements Page -->
-  <section id="achievementsPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Achievements</h2>
-        <p>Your personal records and milestones</p>
-      </div>
-    </div>
-
-    <div id="achievementsContent"></div>
-
-  </section>
-
-  <!-- Heat Map Page -->
-  <section id="heatmapPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Heat Map</h2>
-        <p>Yearly consistency overview</p>
-      </div>
-    </div>
-
-    <div class="coming-soon-card">
-      <div>🌡️</div>
-      <h3>Sadhana Heat Map</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
-
-
-  <!-- Goals Page -->
-  <section id="goalsPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Daily Goals</h2>
-        <p>Set your personal daily targets</p>
-      </div>
-    </div>
-
-    <div class="history-tabs">
-    <button class="history-tab-btn active"
-            onclick="openGoalTab('today',this)">
-      Today's Goals
-    </button>
-
-    <button class="history-tab-btn"
-            onclick="openGoalTab('records',this)">
-      Records
-    </button>
-
-    <button class="history-tab-btn"
-            onclick="openGoalTab('analysis',this)">
-      Analysis
-    </button>
-  </div>
-
-  <div id="todayGoalsContent">
-
-    <div class="goal-add-card">
-
-      <input
-        type="text"
-        id="goalInput"
-        placeholder="Enter today's goal..."
-      >
-
-      <button onclick="addGoal()">
-        <i class="fa-solid fa-plus"></i> Add Goal
-      </button>
-
-    </div>
-    <div id="goalLoader" class="goal-loader" style="display:none;">
-        Loading goals...
-    </div>
-    <div id="goalList">
-    </div>
-
-    <div class="goal-footer">
-      <h3>
-          Today's Score :
-          <span id="goalScore">0%</span>
-      </h3>
-    </div>
-
-  </div>
-
-  <div id="goalRecordsLoader" class="goal-loader" style="display:none;">
-    Loading records...
-  </div>  
-  <div id="goalRecordsTab" style="display:none"></div>
-
-  <div id="goalAnalysisTab" style="display:none"></div>
-
-  </section>
-
-
-  <!-- Reading Tracker Page -->
-  <section id="readingTrackerPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Reading Tracker</h2>
-        <p>Track spiritual books and chapters</p>
-      </div>
-    </div>
-
-    <div class="coming-soon-card">
-      <div>📖</div>
-      <h3>Reading Tracker</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
-
-
-  <!-- Daily Reflection Page -->
-  <section id="reflectionPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Daily Reflection</h2>
-        <p>Record your daily spiritual realizations</p>
-      </div>
-    </div>
-
-    <!-- Reflection Form -->
-    <div class="reflection-form-card">
-
-      <div class="reflection-form-heading">
-        <div class="reflection-heading-icon">💭</div>
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
         <div>
-          <h3>Today's Reflection</h3>
-          <p>Pause, reflect and record what mattered today.</p>
+          <h2>Reading Tracker</h2>
+          <p>Track spiritual books and chapters</p>
         </div>
       </div>
 
-      <div class="reflection-date-group">
-        <label for="reflectionDate">
-          📅 Reflection Date
-        </label>
-
-        <input
-          type="date"
-          id="reflectionDate"
-          onchange="loadReflectionForSelectedDate()"
-        >
+      <div class="coming-soon-card">
+        <div>📖</div>
+        <h3>Reading Tracker</h3>
+        <p>This feature will be added soon.</p>
       </div>
 
-      <div class="reflection-question">
-        <label for="reflectionInspired">
-          🌿 What inspired you today?
-        </label>
+    </section>
 
-        <textarea
-          id="reflectionInspired"
-          rows="3"
-          placeholder="A verse, experience, association or thought that inspired you..."
-        ></textarea>
-      </div>
 
-      <div class="reflection-question">
-        <label for="reflectionLearned">
-          📖 What did you learn today?
-        </label>
+    <!-- Daily Reflection Page -->
+    <section id="reflectionPage" class="feature-page">
 
-        <textarea
-          id="reflectionLearned"
-          rows="3"
-          placeholder="Write any realization or lesson from today..."
-        ></textarea>
-      </div>
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-      <div class="reflection-question">
-        <label for="reflectionImprove">
-          🎯 What would you like to improve tomorrow?
-        </label>
-
-        <textarea
-          id="reflectionImprove"
-          rows="3"
-          placeholder="Mention one thing you would like to do better tomorrow..."
-        ></textarea>
-      </div>
-
-      <div class="reflection-question">
-        <label for="reflectionNotes">
-          🪷 Anything else you want to remember?
-        </label>
-
-        <textarea
-          id="reflectionNotes"
-          rows="4"
-          placeholder="Write freely about chanting, reading, seva, gratitude, struggles or association..."
-        ></textarea>
-      </div>
-
-      <button
-        type="button"
-        class="save-reflection-button"
-        onclick="saveDailyReflection()"
-      >
-        <span>✓</span>
-        Save Reflection
-      </button>
-
-    </div>
-
-    <!-- Previous Reflections -->
-    <div class="reflection-history-section">
-
-      <div class="reflection-history-heading">
         <div>
-          <h3>📜 Past Reflections</h3>
-          <p>Your previously saved spiritual reflections</p>
+          <h2>Daily Reflection</h2>
+          <p>Record your daily spiritual realizations</p>
+        </div>
+      </div>
+
+      <!-- Reflection Form -->
+      <div class="reflection-form-card">
+
+        <div class="reflection-form-heading">
+          <div class="reflection-heading-icon">💭</div>
+
+          <div>
+            <h3>Today's Reflection</h3>
+            <p>Pause, reflect and record what mattered today.</p>
+          </div>
         </div>
 
-        <span id="reflectionCount">0 entries</span>
+        <div class="reflection-date-group">
+          <label for="reflectionDate">
+            📅 Reflection Date
+          </label>
+
+          <input type="date" id="reflectionDate" onchange="loadReflectionForSelectedDate()">
+        </div>
+
+        <div class="reflection-question">
+          <label for="reflectionInspired">
+            🌿 What inspired you today?
+          </label>
+
+          <textarea id="reflectionInspired" rows="3"
+            placeholder="A verse, experience, association or thought that inspired you..."></textarea>
+        </div>
+
+        <div class="reflection-question">
+          <label for="reflectionLearned">
+            📖 What did you learn today?
+          </label>
+
+          <textarea id="reflectionLearned" rows="3"
+            placeholder="Write any realization or lesson from today..."></textarea>
+        </div>
+
+        <div class="reflection-question">
+          <label for="reflectionImprove">
+            🎯 What would you like to improve tomorrow?
+          </label>
+
+          <textarea id="reflectionImprove" rows="3"
+            placeholder="Mention one thing you would like to do better tomorrow..."></textarea>
+        </div>
+
+        <div class="reflection-question">
+          <label for="reflectionNotes">
+            🪷 Anything else you want to remember?
+          </label>
+
+          <textarea id="reflectionNotes" rows="4"
+            placeholder="Write freely about chanting, reading, seva, gratitude, struggles or association..."></textarea>
+        </div>
+
+        <button type="button" class="save-reflection-button" onclick="saveDailyReflection()">
+          <span>✓</span>
+          Save Reflection
+        </button>
+
       </div>
 
-      <div id="reflectionRecords"></div>
+      <!-- Previous Reflections -->
+      <div class="reflection-history-section">
 
-    </div>
+        <div class="reflection-history-heading">
+          <div>
+            <h3>📜 Past Reflections</h3>
+            <p>Your previously saved spiritual reflections</p>
+          </div>
 
-  </section>
+          <span id="reflectionCount">0 entries</span>
+        </div>
 
+        <div id="reflectionRecords"></div>
 
-  <!-- Export Page -->
-  <section id="exportPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Export Data</h2>
-        <p>Download and share your records</p>
       </div>
-    </div>
 
-    <div class="coming-soon-card">
-      <div>📤</div>
-      <h3>Export Data</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- Backup Page -->
-  <section id="backupPage" class="feature-page">
+    <!-- Export Page -->
+    <section id="exportPage" class="feature-page">
 
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-      <div>
-        <h2>Backup & Restore</h2>
-        <p>Protect your saved records</p>
+        <div>
+          <h2>Export Data</h2>
+          <p>Download and share your records</p>
+        </div>
       </div>
-    </div>
 
-    <div class="coming-soon-card">
-      <div>☁️</div>
-      <h3>Backup & Restore</h3>
-      <p>This feature will be added soon.</p>
-    </div>
-
-  </section>
-
-
-  <!-- Settings Page -->
-  <section id="settingsPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>Settings</h2>
-        <p>Manage your app preferences</p>
+      <div class="coming-soon-card">
+        <div>📤</div>
+        <h3>Export Data</h3>
+        <p>This feature will be added soon.</p>
       </div>
-    </div>
 
-  <!-- <div class="settings-card">
+    </section>
+
+
+    <!-- Backup Page -->
+    <section id="backupPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Backup & Restore</h2>
+          <p>Protect your saved records</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>☁️</div>
+        <h3>Backup & Restore</h3>
+        <p>This feature will be added soon.</p>
+      </div>
+
+    </section>
+
+
+    <!-- Settings Page -->
+    <section id="settingsPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>Settings</h2>
+          <p>Manage your app preferences</p>
+        </div>
+      </div>
+
+      <!-- <div class="settings-card">
 
     <div class="setting-item">
       <div>
@@ -850,35 +776,35 @@ onclick="closeSidebar()"
     </div>
 
   </div> -->
-  <div class="coming-soon-card"> <div>⚙️</div> <h3>Settings</h3> <p>This feature will be added soon.</p> </div>
-  </section>
-
-
-  <!-- About Page -->
-  <section id="aboutPage" class="feature-page">
-
-    <div class="feature-page-header">
-      <button
-        type="button"
-        class="feature-back-button"
-        onclick="returnToDailyPage()"
-      >
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-
-      <div>
-        <h2>About</h2>
-        <p>About the Sadhana Tracker</p>
+      <div class="coming-soon-card">
+        <div>⚙️</div>
+        <h3>Settings</h3>
+        <p>This feature will be added soon.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="coming-soon-card">
-      <div>🌿</div>
-      <h3>Sadhana Tracker</h3>
-      <p>Made for sincere daily spiritual practice.</p>
-    </div>
 
-  </section>
+    <!-- About Page -->
+    <section id="aboutPage" class="feature-page">
+
+      <div class="feature-page-header">
+        <button type="button" class="feature-back-button" onclick="returnToDailyPage()">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div>
+          <h2>About</h2>
+          <p>About the Sadhana Tracker</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <div>🌿</div>
+        <h3>Sadhana Tracker</h3>
+        <p>Made for sincere daily spiritual practice.</p>
+      </div>
+
+    </section>
 
   </main>
 
