@@ -189,7 +189,6 @@ function showRecords() {
 }
 
 async function openHistoryTab(view, clickedButton = null) {
-  console.log("openHistoryTab called with view:", view);
   currentHistoryView = view;
 
   const recordsDiv = document.getElementById("records");
@@ -199,7 +198,6 @@ async function openHistoryTab(view, clickedButton = null) {
 await loadSadhanaData();
 
 const data = sadhanaData;
-console.log("Loaded sadhanaData:", data);
 
   data.sort(
     (a, b) => createLocalDate(b.date) - createLocalDate(a.date)
@@ -2090,9 +2088,10 @@ function renderGoals() {
 
 async function toggleGoal(index) {
 
-    todayGoals[index].completed = !todayGoals[index].completed;
+    todayGoals[index].completed = !todayGoals[index].completed;    
     renderGoals();
     await saveTodayGoals();
+    console.log("After save", goalRecords);
     
 }
 
@@ -2103,6 +2102,7 @@ async function deleteGoal(index) {
     renderGoals();
 
     await saveTodayGoals();
+
 
 }
 
@@ -2135,7 +2135,7 @@ async function saveTodayGoals() {
 
         const today = new Date().toISOString().split("T")[0];
 
-        await fetch(`${API_BASE_URL}/daily-goals`, {
+       const response = await fetch(`${API_BASE_URL}/daily-goals`, {
 
             method: "POST",
 
@@ -2150,11 +2150,15 @@ async function saveTodayGoals() {
             })
 
         });
-
-    } catch (error) {
-
+        const result = await response.json();
+        const savedRecord = result.data;
+        const index = goalRecords.findIndex(record => record.date === savedRecord.date);
+        if (index !== -1) {goalRecords[index] = savedRecord;} 
+        else {
+          goalRecords.push(savedRecord);
+        }
+        } catch (error) {
         console.error("Error saving goals:", error);
-
     }
 
 }
@@ -2197,12 +2201,17 @@ function cancelEditGoal() {
 
 async function loadGoalRecords() {
 
+  if (goalRecords.length > 0) {
+    renderGoalRecords(goalRecords);
+    return;
+}
+
     try {
         document.getElementById("goalRecordsLoader").style.display = "block";
         document.getElementById("goalRecordsTab").style.display = "none";
         const response = await fetch(`${API_BASE_URL}/daily-goals`);
         const result = await response.json();
-        goalRecords = result.data;
+        goalRecords = result.data || [];
         renderGoalRecords(goalRecords);
         document.getElementById("goalRecordsLoader").style.display = "none";
         document.getElementById("goalRecordsTab").style.display = "block";
